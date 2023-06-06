@@ -70,8 +70,8 @@ public class Generator {
     }
 
     public void resetLFSR(){
-        m1.setReg(initialSeed1);
-        m2.setReg(initialSeed2);
+        m1.setReg(initialSeed1.clone());
+        m2.setReg(initialSeed2.clone());
     }
 
     private double sqr(double x) {
