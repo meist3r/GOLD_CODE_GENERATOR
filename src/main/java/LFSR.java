@@ -1,22 +1,34 @@
 public class LFSR{
-    private int len;
-    private int[] reg;
-    private int[] mseq;
+    private int len;        // length of the lfsr
+    private int[] reg;      // register
+    private int[] mseq;     // indexes of bits to calculate feedback
 
+    /**
+     * @param seed initial seed
+     * @param msequence indexes of bits taken to calculate feedback
+     */
     public LFSR (int[] seed, int[] msequence){
         reg = seed;
         len = seed.length;
         mseq = msequence;
     }
 
+
     public void setReg(int[] reg) {
         this.reg = reg;
+    }
+
+    public int[] getReg() {
+        return reg;
     }
 
     public int getLen() {
         return len;
     }
 
+    /**
+     * @return LFSR output bit
+     */
     public int pop(){
         int output = reg[len-1];
 
@@ -33,7 +45,4 @@ public class LFSR{
         return output;
     }
 
-    public int[] getReg() {
-        return reg;
-    }
 }

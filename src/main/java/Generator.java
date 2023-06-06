@@ -6,50 +6,44 @@ public class Generator {
 
 
 
-    public Generator(int[] pair1, int[] pair2, int[] seed1, int[] seed2)  {
+    public Generator(int[] mseq1, int[] mseq2, int[] seed1, int[] seed2)  {
         try {
             if (seed1.length != seed2.length){throw new Exception("Different seed lengths.");}
-            if (pair1.length == 0 || pair2.length==0 ) {throw new Exception("Pair/s empty!");}
-            for (int x:pair1) {
+            if (mseq1.length == 0 || mseq2.length==0 ) {throw new Exception("Pair/s empty!");}
+            for (int x:mseq1) {
                 if (x>seed1.length){
-                    throw new Exception("Invalid sequences in pair1.");
+                    throw new Exception("Invalid sequences in mseq1.");
                 }
             }
-            for (int x:pair2) {
+            for (int x:mseq2) {
                 if (x>seed2.length){
-                    throw new Exception("Invalid sequences in pair2.");
+                    throw new Exception("Invalid sequences in mseq2.");
                 }
             }
         }catch (Exception e) {e.printStackTrace();}
 
         sizeOfLSFR = seed1.length;
-        for (int i = 0;i<pair1.length;i++) {
-            pair1[i] -= 1;
+        for (int i = 0;i<mseq1.length;i++) {
+            mseq1[i] -= 1;
         }
-        for (int i = 0;i<pair2.length;i++) {
-            pair2[i] -= 1;
+        for (int i = 0;i<mseq2.length;i++) {
+            mseq2[i] -= 1;
         }
 
         initialSeed1 = seed1.clone();
         initialSeed2 = seed2.clone();
 
 
-        m1 = new LFSR(seed1, pair1);
-        m2 = new LFSR(seed2, pair2);
+        m1 = new LFSR(seed1, mseq1);
+        m2 = new LFSR(seed2, mseq2);
 
 
     }
 
 
-    public int getSizeOfLSFR() {
-        return sizeOfLSFR;
-    }
-
-    public int getLengthOfOptimalGoldCode(){
-        return (int) (Math.pow(2,sizeOfLSFR)-1);
-
-    }
-
+    /**
+     * @return next output bit of the Gold Code sequence.
+     */
     public int generate(){
         int out1,out2,result;
 
@@ -58,6 +52,21 @@ public class Generator {
         result = out1 ^ out2;
 
         return result;
+    }
+
+    /**
+     * Length of the Gold Code sequence for optimal m-sequences is 2^n - 1.
+     */
+    public int getLengthOfOptimalGoldCode(){
+        return (int) (Math.pow(2,sizeOfLSFR)-1);
+
+    }
+
+    /**
+     * @return Size of LFSRs inside the generator.
+     */
+    public int getSizeOfLSFR() {
+        return sizeOfLSFR;
     }
 
     public LFSR getM1() {

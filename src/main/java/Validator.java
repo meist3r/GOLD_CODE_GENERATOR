@@ -6,12 +6,16 @@ public class Validator {
     private int[] mSequencesCorrelation;
     private boolean isPreferredSequences;
 
+    /**
+     * Validator used to check whether a given generator uses preferred pair m-sequences.
+     */
     public Validator(Generator g){
         generator=g;
         autoCorrelation = autoCorrelation();
         mSequencesCorrelation = mSequenceCorrelation();
         isPreferredSequences = preferedSequence();
     }
+
 
     public Generator getGenerator() {
         return generator;
@@ -29,28 +33,73 @@ public class Validator {
         return isPreferredSequences;
     }
 
+
+    /**
+     * Calculates auto-correlation of the generator's output of an optimal sequence's length.
+     */
+    private int[] autoCorrelation(){
+        int[] x = new int[generator.getLengthOfOptimalGoldCode()];
+        for (int i = 0; i<generator.getLengthOfOptimalGoldCode(); i++){
+            x[i] = generator.generate();
+        }
+        generator.resetLFSR();
+        return correlation(x,x);
+    }
+
+    /**
+     * Calculates cross-correlation values of LFSRs outputs of an optimal sequence's length.
+     */
+    private int[] mSequenceCorrelation() {
+
+        int len = generator.getLengthOfOptimalGoldCode();
+        int[] x = new int[len];
+        int[] y = new int[len];
+
+        for (int i=0; i<len;i++){
+            x[i] = generator.getM1().pop();
+            y[i] = generator.getM2().pop();
+        }
+        generator.resetLFSR();
+        return correlation(x,y);
+    }
+
+    /**
+     * M-sequences are preferred for a specific generator, when cross-correlation values of LFSRs outputs are three-valued.
+     */
+    private boolean preferedSequence(){
+        int x,y,t;
+        x = generator.getLengthOfOptimalGoldCode();
+        y = generator.getSizeOfLSFR();
+        if(x%2==0){
+            t = (int) (1+Math.pow(2,(y+2)/2));
+        }else{
+            t = (int) (1+Math.pow(2,(y+1)/2));
+        }
+        ArrayList<Integer> e = new ArrayList<Integer>();
+        e.add(-t);
+        e.add(-1);
+        e.add(t-2);
+        for (int i: mSequencesCorrelation) {
+            if (e.contains(i)){}
+            else{return false;}
+        }
+        return true;
+    }
+
+
     private int[] correlation(int[] x, int[] y){
 
 
         int L = x.length;
-        int k1 = 0;
         int k2 = generator.getLengthOfOptimalGoldCode();
 
-        int[] rangeOfKs = new int[k2 - k1 + 1];
+        int[] rangeOfKs = new int[k2 + 1];
         for (int i = 0; i < rangeOfKs.length; i++) {
-            rangeOfKs[i] = k1 + i;
+            rangeOfKs[i] = i;
         }
 
         int[] Rxy = new int[rangeOfKs.length];
 
-        if (k1 != 0) {
-            int start = (L + k1) % L;
-            int finalIndex = (L + k1 - 1) % L;
-            int[] shiftedX = new int[L];
-            System.arraycopy(x, start, shiftedX, 0, L - start);
-            System.arraycopy(x, 0, shiftedX, L - start, finalIndex + 1);
-            x = shiftedX;
-        }
 
         int q = x.length / y.length;
         int r = x.length % y.length;
@@ -87,48 +136,8 @@ public class Validator {
         return shiftedArray;
     }
 
-    private int[] autoCorrelation(){
-        int[] x = new int[generator.getLengthOfOptimalGoldCode()];
-        for (int i = 0; i<generator.getLengthOfOptimalGoldCode(); i++){
-            x[i] = generator.generate();
-        }
-        generator.resetLFSR();
-        return correlation(x,x);
-    }
 
-    private int[] mSequenceCorrelation() {
 
-        int len = generator.getLengthOfOptimalGoldCode();
-        int[] x = new int[len];
-        int[] y = new int[len];
-
-        for (int i=0; i<len;i++){
-            x[i] = generator.getM1().pop();
-            y[i] = generator.getM2().pop();
-        }
-        generator.resetLFSR();
-        return correlation(x,y);
-    }
-
-    private boolean preferedSequence(){
-        int x,y,t;
-        x = generator.getLengthOfOptimalGoldCode();
-        y = generator.getSizeOfLSFR();
-        if(x%2==0){
-            t = (int) (1+Math.pow(2,(y+2)/2));
-        }else{
-            t = (int) (1+Math.pow(2,(y+1)/2));
-        }
-        ArrayList<Integer> e = new ArrayList<Integer>();
-        e.add(-t);
-        e.add(-1);
-        e.add(t-2);
-        for (int i: mSequencesCorrelation) {
-            if (e.contains(i)){}
-            else{return false;}
-        }
-        return true;
-    }
 
     public static void main(String[] args){
         int[] seed1,seed2;
