@@ -1,13 +1,3 @@
-import org.apache.commons.math3.stat.correlation.PearsonsCorrelation;
-import edu.emory.mathcs.jtransforms.fft.DoubleFFT_1D;
-
-import java.lang.ref.ReferenceQueue;
-import java.util.ArrayList;
-import java.util.Arrays;
-
-//import static java.math.BigInteger.leftShift;
-
-
 public class Generator {
     private LFSR m1;
     private LFSR m2;
@@ -55,7 +45,7 @@ public class Generator {
         return sizeOfLSFR;
     }
 
-    public int getLengthOfGoldCode(){
+    public int getLengthOfOptimalGoldCode(){
         return (int) (Math.pow(2,sizeOfLSFR)-1);
 
     }

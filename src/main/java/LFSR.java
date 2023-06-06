@@ -1,12 +1,12 @@
 public class LFSR{
     private int len;
     private int[] reg;
-    private int[] xxxxxx;
+    private int[] mseq;
 
-    public LFSR (int[] seed, int[] pair){
+    public LFSR (int[] seed, int[] msequence){
         reg = seed;
         len = seed.length;
-        xxxxxx = pair;
+        mseq = msequence;
     }
 
     public void setReg(int[] reg) {
@@ -20,9 +20,9 @@ public class LFSR{
     public int pop(){
         int output = reg[len-1];
 
-        int res = reg[xxxxxx[0]];
-        for (int i = 1; i < xxxxxx.length;i++) {
-            res = res ^ reg[xxxxxx[i]];
+        int res = reg[mseq[0]];
+        for (int i = 1; i < mseq.length; i++) {
+            res = res ^ reg[mseq[i]];
         }
 
         for (int i =len-1; i > 0; i--){

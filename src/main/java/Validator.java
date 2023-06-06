@@ -1,17 +1,16 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Validator {
     private Generator generator;
     private int[] autoCorrelation;
-    private int[] msequencesCorrelation;
-    private boolean isprefferedSequences;
+    private int[] mSequencesCorrelation;
+    private boolean isPreferredSequences;
 
     public Validator(Generator g){
         generator=g;
         autoCorrelation = autoCorrelation();
-        msequencesCorrelation = mSequenceCorrelation();
-        isprefferedSequences = preferedSequence();
+        mSequencesCorrelation = mSequenceCorrelation();
+        isPreferredSequences = preferedSequence();
     }
 
     public Generator getGenerator() {
@@ -22,12 +21,12 @@ public class Validator {
         return autoCorrelation;
     }
 
-    public int[] getMsequencesCorrelation() {
-        return msequencesCorrelation;
+    public int[] getmSequencesCorrelation() {
+        return mSequencesCorrelation;
     }
 
-    public boolean isprefferedSequences() {
-        return isprefferedSequences;
+    public boolean ispreferredSequences() {
+        return isPreferredSequences;
     }
 
     private int[] correlation(int[] x, int[] y){
@@ -35,7 +34,7 @@ public class Validator {
 
         int L = x.length;
         int k1 = 0;
-        int k2 = generator.getLengthOfGoldCode();
+        int k2 = generator.getLengthOfOptimalGoldCode();
 
         int[] rangeOfKs = new int[k2 - k1 + 1];
         for (int i = 0; i < rangeOfKs.length; i++) {
@@ -89,8 +88,8 @@ public class Validator {
     }
 
     private int[] autoCorrelation(){
-        int[] x = new int[generator.getLengthOfGoldCode()];
-        for (int i = 0; i<generator.getLengthOfGoldCode();i++){
+        int[] x = new int[generator.getLengthOfOptimalGoldCode()];
+        for (int i = 0; i<generator.getLengthOfOptimalGoldCode(); i++){
             x[i] = generator.generate();
         }
         generator.resetLFSR();
@@ -99,7 +98,7 @@ public class Validator {
 
     private int[] mSequenceCorrelation() {
 
-        int len = generator.getLengthOfGoldCode();
+        int len = generator.getLengthOfOptimalGoldCode();
         int[] x = new int[len];
         int[] y = new int[len];
 
@@ -113,7 +112,7 @@ public class Validator {
 
     private boolean preferedSequence(){
         int x,y,t;
-        x = generator.getLengthOfGoldCode();
+        x = generator.getLengthOfOptimalGoldCode();
         y = generator.getSizeOfLSFR();
         if(x%2==0){
             t = (int) (1+Math.pow(2,(y+2)/2));
@@ -124,7 +123,7 @@ public class Validator {
         e.add(-t);
         e.add(-1);
         e.add(t-2);
-        for (int i:msequencesCorrelation) {
+        for (int i: mSequencesCorrelation) {
             if (e.contains(i)){}
             else{return false;}
         }
@@ -141,7 +140,7 @@ public class Validator {
 
         Generator g = new Generator(pair1,pair2,seed1,seed2);
         Validator validator = new Validator(g);
-        System.out.println(validator.isprefferedSequences());
+        System.out.println(validator.ispreferredSequences());
 
 
 
