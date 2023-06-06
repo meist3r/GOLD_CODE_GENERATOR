@@ -1,5 +1,7 @@
 import org.apache.commons.math3.stat.correlation.PearsonsCorrelation;
 import edu.emory.mathcs.jtransforms.fft.DoubleFFT_1D;
+
+import java.lang.ref.ReferenceQueue;
 import java.util.Arrays;
 
 //import static java.math.BigInteger.leftShift;
@@ -9,13 +11,9 @@ public class Generator {
     private LFSR m1;
     private LFSR m2;
     private int sizeOfLSFR;
+    private int[] initialSeed1, initialSeed2;
 
-    public LFSR getM1() {
-        return m1;
-    }
-    public LFSR getM2() {
-        return m2;
-    }
+
 
     public Generator(int[] pair1, int[] pair2, int[] seed1, int[] seed2)  {
         try {
@@ -32,11 +30,24 @@ public class Generator {
             }
         }catch (Exception e) {e.printStackTrace();}
 
+        sizeOfLSFR = seed1.length;
+
+
+        initialSeed1 = seed1.clone();
+        initialSeed2 = seed2.clone();
+
 
         m1 = new LFSR(seed1, pair1);
         m2 = new LFSR(seed2, pair2);
-        sizeOfLSFR = seed1.length;
 
+
+    }
+
+    public LFSR getM1() {
+        return m1;
+    }
+    public LFSR getM2() {
+        return m2;
     }
 
     public int getSizeOfLSFR() {
@@ -55,71 +66,12 @@ public class Generator {
         out2 = m2.pop();
         result = out1 ^ out2;
 
-
         return result;
     }
 
-    public double[] calculateMSequenceCorrelation(){
-
-        int len = getLengthOfGoldCode();
-        double[] m1out = new double[len];
-        double[] m2out = new double[len];
-
-        for (int i=0; i<len;i++){
-            m1out[i] = m1.pop();
-            m2out[i] = m2.pop();
-        }
-
-
-        //PearsonsCorrelation correlation = new PearsonsCorrelation();
-        //double correlationCoefficient = correlation.correlation(m1out, m2out);
-        double[] correlationCoefficient = fftCrossCorrelation(m1out,m2out);
-
-
-        return correlationCoefficient;
-    }
-
-    public double[] calculateAutoCorrelation(){
-        int len = getLengthOfGoldCode()+1;
-        double[] array = new double[len];
-
-        for (int i=0; i<len;i++){
-            array[i] = generate();
-        }
-        double [] ac1 = new double [len];
-        fftAutoCorrelation(array,ac1);
-        ac1[len-1] = 1.0;
-        System.out.println(Arrays.toString(ac1));
- //       double mean = 0;
- //       for (double value : array) {
- //           mean += value;
- //       }
- //       mean /= array.length;
-//
- //       double variance = 0;
- //       for (double value : array) {
- //           variance += Math.pow(value - mean, 2);
- //       }
- //       variance /= array.length;
-//
- //       int maxLag = array.length - 1;
- //       double[] autocorrelation = new double[maxLag + 1];
-//
- //       for (int lag = 0; lag <= maxLag; lag++) {
- //           double numerator = 0;
-//
- //           for (int i = 0; i < array.length - lag; i++) {
- //               numerator += (array[i] - mean) * (array[i + lag] - mean);
- //           }
-//
- //           autocorrelation[lag] = numerator / (variance * (array.length - lag));
- //       }
-//
- //       // Print the autocorrelation values
- //       for (int lag = 0; lag <= maxLag; lag++) {
- //           System.out.println("Autocorrelation at lag " + lag + ": " + autocorrelation[lag]);
- //       }
-        return ac1;
+    public void resetLFSR(){
+        m1.setReg(initialSeed1);
+        m2.setReg(initialSeed2);
     }
 
     private double sqr(double x) {
@@ -149,12 +101,25 @@ public class Generator {
         }
     }
 
-    public static int sequenceCorrelation(int[] x, int[] y, int k1, int k2) {
-        if (x.length != y.length) {
-            throw new IllegalArgumentException("Sequences x and y should be of the same length");
+
+
+    public int[] sequenceCorrelation() {
+
+        int len = getLengthOfGoldCode();
+        int[] x = new int[len];
+        int[] y = new int[len];
+
+        for (int i=0; i<len;i++){
+            x[i] = m1.pop();
+            y[i] = m2.pop();
         }
+        System.out.println("x " + Arrays.toString(x));
+        System.out.println("y " + Arrays.toString(y));
 
         int L = x.length;
+        int k1 = 0;
+        int k2 = getLengthOfGoldCode();
+
         int[] rangeOfKs = new int[k2 - k1 + 1];
         for (int i = 0; i < rangeOfKs.length; i++) {
             rangeOfKs[i] = k1 + i;
@@ -189,12 +154,18 @@ public class Generator {
                     disagreements++;
                 }
             }
-            //x = leftShift(x);
+            x = leftShift(x);
             Rxy[i] = agreements - disagreements;
         }
-        return 1;
+        return Rxy;
     }
 
+    private static int[] leftShift(int[] array) {
+        int[] shiftedArray = new int[array.length];
+        System.arraycopy(array, 1, shiftedArray, 0, array.length - 1);
+        shiftedArray[array.length - 1] = array[0];
+        return shiftedArray;
+    }
 
 
     public double[] fftCrossCorrelation(double [] x,double[] y){
@@ -239,6 +210,7 @@ public class Generator {
 
         return disagree;
     }
+
     public void shiftByOne(double [] x){
         double last = x[x.length-1];
         for (int i =x.length-1; i > 0; i--){
@@ -251,20 +223,15 @@ public class Generator {
     public static void main(String[] args){
         int[] seed1,seed2;
         int[] pair1, pair2;
-        seed1 = new int[]{1,1,0,1,0};
-        seed2 = new int[]{0,1,0,1,0};
+        seed1 = new int[]{0,0,0,0,1};
+        seed2 = new int[]{0,0,0,0,1};
         pair1 = new int[]{1,2,3,4};
         pair2 = new int[]{1,4};
 
         Generator g = new Generator(pair1,pair2,seed1,seed2);
-        g.calculateAutoCorrelation();
-
-        seed1 = new int[]{1,1,1,1,0};
-        seed2 = new int[]{0,1,0,1,0};
-        pair1 = new int[]{1,2,3,4};
-        pair2 = new int[]{1,4};
-        Generator g1 = new Generator(pair1,pair2,seed1,seed2);
-        //g1.calculateMSequenceCorrelation();
+        System.out.println(g.getLengthOfGoldCode());
+        g.resetLFSR();
+        System.out.println("cross corelation" + Arrays.toString(g.sequenceCorrelation()));
 
 
     }

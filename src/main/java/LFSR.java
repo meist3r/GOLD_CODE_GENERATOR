@@ -9,6 +9,10 @@ public class LFSR{
         xxxxxx = pair;
     }
 
+    public void setReg(int[] reg) {
+        this.reg = reg;
+    }
+
     public int getLen() {
         return len;
     }
