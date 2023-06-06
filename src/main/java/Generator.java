@@ -2,6 +2,7 @@ import org.apache.commons.math3.stat.correlation.PearsonsCorrelation;
 import edu.emory.mathcs.jtransforms.fft.DoubleFFT_1D;
 
 import java.lang.ref.ReferenceQueue;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 //import static java.math.BigInteger.leftShift;
@@ -195,6 +196,26 @@ public class Generator {
 
     }
 
+    public boolean isPreferedSequence(int[] arr){
+        int x,y,t;
+        x = getLengthOfGoldCode();
+        y = getSizeOfLSFR();
+        if(x%2==0){
+            t = (int) (1+Math.pow(2,(y+2)/2));
+        }else{
+            t = (int) (1+Math.pow(2,(y+1)/2));
+        }
+        ArrayList<Integer> e = new ArrayList<Integer>();
+        e.add(-t);
+        e.add(-1);
+        e.add(t-2);
+        for (int i:arr) {
+            if (e.contains(i)){}
+            else{return false;}
+        }
+        return true;
+    }
+
 
     public static void main(String[] args){
         int[] seed1,seed2;
@@ -207,7 +228,11 @@ public class Generator {
         Generator g = new Generator(pair1,pair2,seed1,seed2);
         System.out.println(g.getLengthOfGoldCode());
         g.resetLFSR();
-        System.out.println("cross corelation" + Arrays.toString(g.mSequenceCorrelation()));
+        int[] a = g.mSequenceCorrelation();
+        System.out.println("cross corelation" + Arrays.toString(a));
+        System.out.println(g.isPreferedSequence(a));
+
+
 
 
     }
