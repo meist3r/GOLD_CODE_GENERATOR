@@ -4,7 +4,7 @@ public class Generator {
     private LFSR m1;
     private LFSR m2;
     private int sizeOfLSFR;
-    private int[] initialSeed1, initialSeed2;
+    private final int[] initialSeed1, initialSeed2;
 
 
 
@@ -77,6 +77,14 @@ public class Generator {
 
     public LFSR getM2() {
         return m2;
+    }
+
+    public int[] getInitialSeed1() {
+        return initialSeed1;
+    }
+
+    public int[] getInitialSeed2() {
+        return initialSeed2;
     }
 
     public void resetLFSR(){
