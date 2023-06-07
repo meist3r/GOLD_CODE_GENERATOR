@@ -12,7 +12,7 @@ import java.awt.Dimension;
 import java.awt.Stroke;
 
 public class LineChart {
-    public static void generateLineChart(int[] data, String title) {
+    public static void generateLineChart(double[] data, String title) {
         DefaultXYDataset dataset = new DefaultXYDataset();
         double[][] seriesData = new double[2][data.length];
 

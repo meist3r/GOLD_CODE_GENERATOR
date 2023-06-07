@@ -12,10 +12,10 @@ public class Manual {
         System.out.println("Para wielomianow jest: " + (preferred ? "OPTYMALNA" : "NIEOPTYMALNA"));
 
         int[] mSeqCorArr = validator.getMSequencesCorrelation();
-        LineChart.generateLineChart(mSeqCorArr, "Korelacja krzyżowa");
+        LineChart.generateLineChart(Utils.intToDouble(mSeqCorArr), "Korelacja krzyżowa");
 
         int[] mSeqAutoCorArr = validator.getAutoCorrelation();
-        LineChart.generateLineChart(mSeqAutoCorArr, "Autokorelacja");
+        LineChart.generateLineChart(Utils.intToDouble(mSeqAutoCorArr), "Autokorelacja");
 
 
     }

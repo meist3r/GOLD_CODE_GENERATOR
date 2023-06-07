@@ -61,11 +61,11 @@ public class Main {
         switch(choice){
             case 1:
                 int[] mSeqCorArr = validator.getMSequencesCorrelation();
-                LineChart.generateLineChart(mSeqCorArr, "Korelacja krzyżowa");
+                LineChart.generateLineChart(Utils.intToDouble(mSeqCorArr), "Korelacja krzyżowa");
                 break;
             case 2:
                 int[] mSeqAutoCorArr = validator.getAutoCorrelation();
-                LineChart.generateLineChart(mSeqAutoCorArr, "Autokorelacja");
+                LineChart.generateLineChart(Utils.intToDouble(mSeqAutoCorArr), "Autokorelacja");
                 break;
             case 3:
                 int goldCode = g.generate();
@@ -176,8 +176,8 @@ public class Main {
 
         Arrays.sort(mSeq1);
         Arrays.sort(mSeq2);
-        mSeq1 = reverseArray(mSeq1);
-        mSeq2 = reverseArray(mSeq2);
+        mSeq1 = Utils.reverseArray(mSeq1);
+        mSeq2 = Utils.reverseArray(mSeq2);
 
         int[][]seeds = getSeeds();
 
@@ -200,7 +200,7 @@ public class Main {
 
     }
 
-    public static int[][] getSeeds(){ //TODO: Dodaj tutaj informacje jak dlugie to ma byc
+    public static int[][] getSeeds(){
         Scanner scanner = new Scanner(System.in);
         int[][] result = new int[2][];
         boolean waitForGoodInput = true;
@@ -247,14 +247,5 @@ public class Main {
         }
         return result;
     }
-
-    public static int[] reverseArray(int[] array) {
-        int[] reversedArray = new int[array.length];
-        for (int i = 0; i < array.length; i++) {
-            reversedArray[i] = array[array.length - 1 - i];
-        }
-        return reversedArray;
-    }
-
 
 }
