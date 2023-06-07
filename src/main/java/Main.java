@@ -50,7 +50,9 @@ public class Main {
         Generator g = new Generator(data[0], data[1], data[2], data[3]);
         Validator validator = new Validator(g);
         boolean preferred = validator.isPreferredSequences();
+        int maxLen = g.getLengthOfGoldCode();
         System.out.println("Twoja para wielomianow jest: " + (preferred ? "OPTYMALNA" : "NIEOPTYMALNA"));
+        System.out.println("Dlugosc kodu Golda: " + maxLen);
         while (true) {
             System.out.println("1. Pokaz wykres korelacji krzyzowej");
             System.out.println("2. Pokaz wykres autokorelacji");
@@ -78,7 +80,7 @@ public class Main {
                     break;
                 case 5:
                     System.out.print("# ");
-                    for (int i = 0; i < g.getLengthOfOptimalGoldCode(); i++) {
+                    for (int i = 0; i < maxLen; i++) {
                         int goldCode = g.generate();
                         System.out.print(goldCode);
                     }

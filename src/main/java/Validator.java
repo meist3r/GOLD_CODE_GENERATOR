@@ -116,9 +116,6 @@ public class Validator {
 
 
     private int[] correlation(int[] x, int[] y){
-
-
-        int L = x.length;
         int k2 = generator.getLengthOfOptimalGoldCode();
 
         int[] rangeOfKs = new int[k2 + 1];

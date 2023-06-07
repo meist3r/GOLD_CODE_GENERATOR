@@ -1,5 +1,7 @@
 import org.apache.commons.math3.stat.StatUtils;
 
+import java.util.Arrays;
+
 public class Generator {
     private LFSR m1;
     private LFSR m2;
@@ -65,6 +67,22 @@ public class Generator {
     }
 
     /**
+     * Length of the Gold Code sequence.
+     */
+    public int getLengthOfGoldCode(){
+        int[] startingSeed1 =  m1.getReg().clone();
+        int[] startingSeed2 =  m2.getReg().clone();
+        int len = 0;
+        do{
+            generate();
+            len++;
+        }while(!Arrays.equals(startingSeed1, m1.getReg()) && !Arrays.equals(startingSeed2, m2.getReg()));
+
+        resetLFSR();
+        return len;
+    }
+
+    /**
      * @return Size of LFSRs inside the generator.
      */
     public int getSizeOfLSFR() {
@@ -91,6 +109,8 @@ public class Generator {
         m1.setReg(initialSeed1.clone());
         m2.setReg(initialSeed2.clone());
     }
+
+
 
 
 
