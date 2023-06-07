@@ -83,12 +83,12 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         int pairNum;
         System.out.println("Mozliwe predefiniowane wielomiany generujace:");
-        System.out.println("1. x^5 + x^4 + x^3 + x^2 oraz x^5 + x^2 | Dlugosc kodow Golda = 31");
-        System.out.println("2. x^6 + x^5 + x^2 + x oraz x^6 + x | Dlugosc kodow Golda = 63");
-        System.out.println("3. x^7 + x^3 + x^2 + x oraz x^7 + x^3 | Dlugosc kodow Golda = 127");
-        System.out.println("4. x^7 + x^3 + x^1 oraz x^7 + x | Dlugosc kodow Golda = 127");
-        System.out.println("5. x^9 + x^6 + x^4 + x^3 oraz x^9 + x^4 | Dlugosc kodow Golda = 511");
-        System.out.println("6. x^11 + x^8 + x^5 + x^2 oraz x^11 + x^2 | Dlugosc kodow Golda = 2047");
+        System.out.println("1. x^5 + x^4 + x^3 + x^2 oraz x^5 + x^2   | Dlugosc kodow Golda = 31    | Dlugosc LFSR = 5");
+        System.out.println("2. x^6 + x^5 + x^2 + x oraz x^6 + x       | Dlugosc kodow Golda = 63    | Dlugosc LFSR = 6");
+        System.out.println("3. x^7 + x^3 + x^2 + x oraz x^7 + x^3     | Dlugosc kodow Golda = 127   | Dlugosc LFSR = 7");
+        System.out.println("4. x^7 + x^3 + x^1 oraz x^7 + x           | Dlugosc kodow Golda = 127   | Dlugosc LFSR = 7");
+        System.out.println("5. x^9 + x^6 + x^4 + x^3 oraz x^9 + x^4   | Dlugosc kodow Golda = 511   | Dlugosc LFSR = 9");
+        System.out.println("6. x^11 + x^8 + x^5 + x^2 oraz x^11 + x^2 | Dlugosc kodow Golda = 2047  | Dlugosc LFSR = 11");
         System.out.print("\n> ");
         pairNum = scanner.nextInt();
 

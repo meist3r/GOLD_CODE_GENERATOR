@@ -1,3 +1,5 @@
+import org.apache.commons.math3.stat.StatUtils;
+
 public class Generator {
     private LFSR m1;
     private LFSR m2;
@@ -81,6 +83,8 @@ public class Generator {
         m1.setReg(initialSeed1.clone());
         m2.setReg(initialSeed2.clone());
     }
+
+
 
 }
 

@@ -1,4 +1,7 @@
+import org.apache.commons.math3.stat.StatUtils;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Validator {
     private Generator generator;
@@ -137,8 +140,6 @@ public class Validator {
     }
 
 
-
-
     public static void main(String[] args){
         int[] seed1,seed2;
         int[] pair1, pair2;
@@ -150,7 +151,6 @@ public class Validator {
         Generator g = new Generator(pair1,pair2,seed1,seed2);
         Validator validator = new Validator(g);
         System.out.println(validator.isPreferredSequences());
-
 
 
 
