@@ -9,7 +9,6 @@ public class Generator {
     private final int[] initialSeed1, initialSeed2;
 
 
-
     public Generator(int[] mseq1, int[] mseq2, int[] seed1, int[] seed2)  {
         try {
             if (seed1.length != seed2.length){throw new Exception("Different seed lengths.");}

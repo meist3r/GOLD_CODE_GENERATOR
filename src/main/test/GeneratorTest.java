@@ -9,14 +9,13 @@ class GeneratorTest {
 
     @Test
     void generateFullSequenceTest() {
-        int[] seed1,seed2;
-        int[] pair1, pair2;
+        int[] seed1, seed2, polynomial1, polynomial2;
         seed1 = new int[]{0,0,0,0,1};
         seed2 = new int[]{0,0,0,0,1};
-        pair1 = new int[]{2,3,4,5};
-        pair2 = new int[]{2,5};
+        polynomial1 = new int[]{2,3,4,5};
+        polynomial2 = new int[]{2,5};
 
-        Generator g = new Generator(pair1,pair2,seed1,seed2);
+        Generator g = new Generator(polynomial1,polynomial2,seed1,seed2);
         for (int i = 0; i<g.getLengthOfOptimalGoldCode();i++){  //generate full sequence
             g.generate();
         }
@@ -31,34 +30,33 @@ class GeneratorTest {
 
     @Test
     void errorTest() {
-        int[] seed1,seed2;
-        int[] pair1, pair2;
+        int[] seed1, seed2, polynomial1, polynomial2;
         seed1 = new int[]{0,0,0,1}; //seeds are different length
         seed2 = new int[]{0,0,0,0,1};
-        pair1 = new int[]{2,3,4,5};
-        pair2 = new int[]{2,5};
+        polynomial1 = new int[]{2,3,4,5};
+        polynomial2 = new int[]{2,5};
         try {
-            new Generator(pair1,pair2,seed1,seed2);
+            new Generator(polynomial1,polynomial2,seed1,seed2);
         }catch (Exception e){
             assertThrows(Exception.class, (Executable) e);
         }
 
         seed1 = new int[]{0,0,0,0,1};
         seed2 = new int[]{0,0,0,0,1};
-        pair1 = new int[]{2,3,4,6}; //polynomial level too high
-        pair2 = new int[]{2,5};
+        polynomial1 = new int[]{2,3,4,6}; //polynomial level too high
+        polynomial2 = new int[]{2,5};
         try {
-            new Generator(pair1,pair2,seed1,seed2);
+            new Generator(polynomial1,polynomial2,seed1,seed2);
         }catch (Exception e){
             assertThrows(Exception.class, (Executable) e);
         }
 
         seed1 = new int[]{0,0,0,0,1};
         seed2 = new int[]{0,0,0,0,1};
-        pair1 = new int[]{2,3,4,5};
-        pair2 = new int[]{};        //polynomial is 0
+        polynomial1 = new int[]{2,3,4,5};
+        polynomial2 = new int[]{};        //polynomial is 0
         try {
-            new Generator(pair1,pair2,seed1,seed2);
+            new Generator(polynomial1,polynomial2,seed1,seed2);
         }catch (Exception e){
             assertThrows(Exception.class, (Executable) e);
         }

@@ -7,17 +7,15 @@ public class Validator {
     private Generator generator;
     private int[] autoCorrelation;
     private int[] mSequencesCorrelation;
-
     private int[] mSequence1AutoCorrelation;
-
     private int[] mSequence2AutoCorrelation;
     private boolean isPreferredSequences;
 
     /**
      * Validator used to check whether a given generator uses preferred pair m-sequences.
      */
-    public Validator(Generator g){
-        generator=g;
+    public Validator(Generator g) {
+        generator = g;
         autoCorrelation = autoCorrelation();
         mSequencesCorrelation = mSequenceCorrelation();
         mSequence1AutoCorrelation = mSequenceAutoCorrelation(1);
@@ -50,13 +48,13 @@ public class Validator {
     /**
      * Calculates auto-correlation of the generator's output of an optimal sequence's length.
      */
-    private int[] autoCorrelation(){
+    private int[] autoCorrelation() {
         int[] x = new int[generator.getLengthOfOptimalGoldCode()];
-        for (int i = 0; i<generator.getLengthOfOptimalGoldCode(); i++){
+        for (int i = 0; i < generator.getLengthOfOptimalGoldCode(); i++) {
             x[i] = generator.generate();
         }
         generator.resetLFSR();
-        return correlation(x,x);
+        return correlation(x, x);
     }
 
     /**
@@ -68,12 +66,12 @@ public class Validator {
         int[] x = new int[len];
         int[] y = new int[len];
 
-        for (int i=0; i<len;i++){
+        for (int i = 0; i < len; i++) {
             x[i] = generator.getM1().pop();
             y[i] = generator.getM2().pop();
         }
         generator.resetLFSR();
-        return correlation(x,y);
+        return correlation(x, y);
     }
 
     /**
@@ -84,38 +82,46 @@ public class Validator {
         int len = generator.getLengthOfOptimalGoldCode();
         int[] x = new int[len];
 
-        for (int i=0; i<len;i++){
+        for (int i = 0; i < len; i++) {
             x[i] = id == 1 ? generator.getM1().pop() : generator.getM2().pop();
         }
         generator.resetLFSR();
-        return correlation(x,x);
+        return correlation(x, x);
     }
 
     /**
      * M-sequences are preferred for a specific generator, when cross-correlation values of LFSRs outputs are three-valued.
      */
-    private boolean preferredSequence(){
-        int x,y,t;
+    private boolean preferredSequence() {
+        int x, y, t;
         x = generator.getLengthOfOptimalGoldCode();
         y = generator.getSizeOfLSFR();
-        if(x%2==0){
-            t = (int) (1+Math.pow(2,(y+2)/2));
-        }else{
-            t = (int) (1+Math.pow(2,(y+1)/2));
+        if (x % 2 == 0) {
+            t = (int) (1 + Math.pow(2, (y + 2) / 2));
+        } else {
+            t = (int) (1 + Math.pow(2, (y + 1) / 2));
         }
         ArrayList<Integer> e = new ArrayList<Integer>();
         e.add(-t);
         e.add(-1);
-        e.add(t-2);
-        for (int i: mSequencesCorrelation) {
-            if (e.contains(i)){}
-            else{return false;}
+        e.add(t - 2);
+        for (int i : mSequencesCorrelation) {
+            if (e.contains(i)) {
+            } else {
+                return false;
+            }
         }
         return true;
     }
 
-
-    private int[] correlation(int[] x, int[] y){
+    /**
+     * Method is used to calculate correlation values between two datasets.
+     *
+     * @param x dataset 1
+     * @param y dataset 2
+     * @return array of correlation values
+     */
+    private int[] correlation(int[] x, int[] y) {
         int k2 = generator.getLengthOfOptimalGoldCode();
 
         int[] rangeOfKs = new int[k2 + 1];
@@ -162,19 +168,4 @@ public class Validator {
     }
 
 
-    public static void main(String[] args){
-        int[] seed1,seed2;
-        int[] pair1, pair2;
-        seed1 = new int[]{0,0,0,0,1};
-        seed2 = new int[]{0,0,0,0,1};
-        pair1 = new int[]{2,3,4,5};
-        pair2 = new int[]{2,5};
-
-        Generator g = new Generator(pair1,pair2,seed1,seed2);
-        Validator validator = new Validator(g);
-        System.out.println(validator.isPreferredSequences());
-
-
-
-    }
 }
