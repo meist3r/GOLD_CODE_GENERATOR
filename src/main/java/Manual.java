@@ -6,7 +6,6 @@ public class Manual {
         seed2 = new int[]{0,0,0,0,1};
         pair1 = new int[]{2,3,4,5};
         pair2 = new int[]{2,5};
-
         Generator g = new Generator(pair1,pair2,seed1,seed2);
         Validator validator = new Validator(g);
         boolean preferred = validator.isPreferredSequences();
