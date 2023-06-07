@@ -13,7 +13,7 @@ public class Validator {
         generator=g;
         autoCorrelation = autoCorrelation();
         mSequencesCorrelation = mSequenceCorrelation();
-        isPreferredSequences = preferedSequence();
+        isPreferredSequences = preferredSequence();
     }
 
 
@@ -25,11 +25,11 @@ public class Validator {
         return autoCorrelation;
     }
 
-    public int[] getmSequencesCorrelation() {
+    public int[] getMSequencesCorrelation() {
         return mSequencesCorrelation;
     }
 
-    public boolean ispreferredSequences() {
+    public boolean isPreferredSequences() {
         return isPreferredSequences;
     }
 
@@ -66,7 +66,7 @@ public class Validator {
     /**
      * M-sequences are preferred for a specific generator, when cross-correlation values of LFSRs outputs are three-valued.
      */
-    private boolean preferedSequence(){
+    private boolean preferredSequence(){
         int x,y,t;
         x = generator.getLengthOfOptimalGoldCode();
         y = generator.getSizeOfLSFR();
@@ -149,7 +149,7 @@ public class Validator {
 
         Generator g = new Generator(pair1,pair2,seed1,seed2);
         Validator validator = new Validator(g);
-        System.out.println(validator.ispreferredSequences());
+        System.out.println(validator.isPreferredSequences());
 
 
 
