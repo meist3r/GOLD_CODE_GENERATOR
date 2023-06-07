@@ -54,7 +54,9 @@ public class Main {
         while (true) {
             System.out.println("1. Pokaz wykres korelacji krzyzowej");
             System.out.println("2. Pokaz wykres autokorelacji");
-            System.out.println("3. Generuj kod Golda");
+            System.out.println("3. Pokaz wykres autokorelacji pierwszego wielomianu");
+            System.out.println("4. Pokaz wykres autokorelacji drugiego wielomianu");
+            System.out.println("5. Generuj kod Golda");
             System.out.print("\n> ");
             choice = scanner.nextInt();
             switch (choice) {
@@ -67,6 +69,14 @@ public class Main {
                     LineChart.generateLineChart(Utils.intToDouble(mSeqAutoCorArr), "Autokorelacja");
                     break;
                 case 3:
+                    int[] mSeq1AutoCorArr = validator.getMSequencesAutoCorrelation(1);
+                    LineChart.generateLineChart(Utils.intToDouble(mSeq1AutoCorArr), "Autokorelacja pierwszego wielomianu");
+                    break;
+                case 4:
+                    int[] mSeq2AutoCorArr = validator.getMSequencesAutoCorrelation(2);
+                    LineChart.generateLineChart(Utils.intToDouble(mSeq2AutoCorArr), "Autokorelacja drugiego wielomianu");
+                    break;
+                case 5:
                     System.out.print("# ");
                     for (int i = 0; i < g.getLengthOfOptimalGoldCode(); i++) {
                         int goldCode = g.generate();
