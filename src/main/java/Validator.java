@@ -7,6 +7,10 @@ public class Validator {
     private Generator generator;
     private int[] autoCorrelation;
     private int[] mSequencesCorrelation;
+
+    private int[] mSequence1AutoCorrelation;
+
+    private int[] mSequence2AutoCorrelation;
     private boolean isPreferredSequences;
 
     /**
@@ -16,6 +20,8 @@ public class Validator {
         generator=g;
         autoCorrelation = autoCorrelation();
         mSequencesCorrelation = mSequenceCorrelation();
+        mSequence1AutoCorrelation = mSequenceAutoCorrelation(1);
+        mSequence2AutoCorrelation = mSequenceAutoCorrelation(2);
         isPreferredSequences = preferredSequence();
     }
 
@@ -30,6 +36,10 @@ public class Validator {
 
     public int[] getMSequencesCorrelation() {
         return mSequencesCorrelation;
+    }
+
+    public int[] getMSequencesAutoCorrelation(int id) {
+        return id == 1 ? mSequence1AutoCorrelation : mSequence2AutoCorrelation;
     }
 
     public boolean isPreferredSequences() {
@@ -64,6 +74,21 @@ public class Validator {
         }
         generator.resetLFSR();
         return correlation(x,y);
+    }
+
+    /**
+     * Calculates auto-correlation values of LFSR output of an optimal sequence's length.
+     */
+    private int[] mSequenceAutoCorrelation(int id) {
+
+        int len = generator.getLengthOfOptimalGoldCode();
+        int[] x = new int[len];
+
+        for (int i=0; i<len;i++){
+            x[i] = id == 1 ? generator.getM1().pop() : generator.getM2().pop();
+        }
+        generator.resetLFSR();
+        return correlation(x,x);
     }
 
     /**

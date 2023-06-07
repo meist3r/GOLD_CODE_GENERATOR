@@ -4,8 +4,8 @@ public class Manual {
         int[] pair1, pair2;
         seed1 = new int[]{0,0,0,0,1};
         seed2 = new int[]{0,0,0,0,1};
-        pair1 = new int[]{2,3,4,5};
-        pair2 = new int[]{2,5};
+        pair1 = new int[]{1,3,5};
+        pair2 = new int[]{4,5};
         Generator g = new Generator(pair1,pair2,seed1,seed2);
         Validator validator = new Validator(g);
         boolean preferred = validator.isPreferredSequences();
@@ -14,8 +14,14 @@ public class Manual {
         int[] mSeqCorArr = validator.getMSequencesCorrelation();
         LineChart.generateLineChart(Utils.intToDouble(mSeqCorArr), "Korelacja krzyżowa");
 
-        int[] mSeqAutoCorArr = validator.getAutoCorrelation();
-        LineChart.generateLineChart(Utils.intToDouble(mSeqAutoCorArr), "Autokorelacja");
+        int[] AutoCorArr = validator.getAutoCorrelation();
+        LineChart.generateLineChart(Utils.intToDouble(AutoCorArr), "Autokorelacja");
+
+        int[] mSeq1AutoCorArr = validator.getMSequencesAutoCorrelation(1);
+        LineChart.generateLineChart(Utils.intToDouble(mSeq1AutoCorArr), "Autokorelacja pierwszego wielomianu");
+
+        int[] mSeq2AutoCorArr = validator.getMSequencesAutoCorrelation(2);
+        LineChart.generateLineChart(Utils.intToDouble(mSeq2AutoCorArr), "Autokorelacja drugiego wielomianu");
 
 
     }
