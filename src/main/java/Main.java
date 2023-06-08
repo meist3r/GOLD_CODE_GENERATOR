@@ -1,5 +1,4 @@
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.Scanner;
 
 public class Main {
@@ -8,25 +7,20 @@ public class Main {
         int choice;
         while (true) {
             choice = mainMenu();
-            int result[][];
+            int[][] result;
             switch (choice) {
-                case 1:
+                case 1 -> {
                     result = definedMenu();
                     if (result == null) {
                         continue;
                     }
                     actionMenu(result);
-                    break;
-                case 2:
+                }
+                case 2 -> {
                     result = undefinedMenu();
-                    if (result == null) {
-                        continue;
-                    }
                     actionMenu(result);
-                    break;
-                default:
-                    System.out.println("Nieprawidlowy wybor");
-                    break;
+                }
+                default -> System.out.println("Nieprawidlowy wybor");
             }
 
         }
@@ -62,32 +56,32 @@ public class Main {
             System.out.print("\n> ");
             choice = scanner.nextInt();
             switch (choice) {
-                case 1:
+                case 1 -> {
                     int[] mSeqCorArr = validator.getMSequencesCorrelation();
                     LineChart.generateLineChart(Utils.intToDouble(mSeqCorArr), "Korelacja krzyżowa");
-                    break;
-                case 2:
+                }
+                case 2 -> {
                     int[] mSeqAutoCorArr = validator.getAutoCorrelation();
                     LineChart.generateLineChart(Utils.intToDouble(mSeqAutoCorArr), "Autokorelacja");
-                    break;
-                case 3:
+                }
+                case 3 -> {
                     int[] mSeq1AutoCorArr = validator.getMSequencesAutoCorrelation(1);
                     LineChart.generateLineChart(Utils.intToDouble(mSeq1AutoCorArr), "Autokorelacja pierwszego wielomianu");
-                    break;
-                case 4:
+                }
+                case 4 -> {
                     int[] mSeq2AutoCorArr = validator.getMSequencesAutoCorrelation(2);
                     LineChart.generateLineChart(Utils.intToDouble(mSeq2AutoCorArr), "Autokorelacja drugiego wielomianu");
-                    break;
-                case 5:
+                }
+                case 5 -> {
                     System.out.print("# ");
                     for (int i = 0; i < maxLen; i++) {
                         int goldCode = g.generate();
                         System.out.print(goldCode);
                     }
                     System.out.println();
-                    break;
-                default:
-                    break;
+                }
+                default -> {
+                }
             }
         }
     }
@@ -97,12 +91,12 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         int pairNum;
         System.out.println("Mozliwe predefiniowane wielomiany generujace:");
-        System.out.println("1. x^5 + x^4 + x^3 + x^2 oraz x^5 + x^2   | Dlugosc kodow Golda = 31    | Dlugosc LFSR = 5");
-        System.out.println("2. x^6 + x^5 + x^2 + x oraz x^6 + x       | Dlugosc kodow Golda = 63    | Dlugosc LFSR = 6");
-        System.out.println("3. x^7 + x^3 + x^2 + x oraz x^7 + x^3     | Dlugosc kodow Golda = 127   | Dlugosc LFSR = 7");
-        System.out.println("4. x^7 + x^3 + x^1 oraz x^7 + x           | Dlugosc kodow Golda = 127   | Dlugosc LFSR = 7");
-        System.out.println("5. x^9 + x^6 + x^4 + x^3 oraz x^9 + x^4   | Dlugosc kodow Golda = 511   | Dlugosc LFSR = 9");
-        System.out.println("6. x^11 + x^8 + x^5 + x^2 oraz x^11 + x^2 | Dlugosc kodow Golda = 2047  | Dlugosc LFSR = 11");
+        System.out.println("1. x^5 + x^4 + x^3 + x^2 oraz x^5 + x^2   | Dlugosc kodu Golda = 31    | Dlugosc LFSR = 5");
+        System.out.println("2. x^6 + x^5 + x^2 + x oraz x^6 + x       | Dlugosc kodu Golda = 63    | Dlugosc LFSR = 6");
+        System.out.println("3. x^7 + x^3 + x^2 + x oraz x^7 + x^3     | Dlugosc kodu Golda = 127   | Dlugosc LFSR = 7");
+        System.out.println("4. x^7 + x^3 + x^1 oraz x^7 + x           | Dlugosc kodu Golda = 127   | Dlugosc LFSR = 7");
+        System.out.println("5. x^9 + x^6 + x^4 + x^3 oraz x^9 + x^4   | Dlugosc kodu Golda = 511   | Dlugosc LFSR = 9");
+        System.out.println("6. x^11 + x^8 + x^5 + x^2 oraz x^11 + x^2 | Dlugosc kodu Golda = 2047  | Dlugosc LFSR = 11");
         System.out.print("\n> ");
         pairNum = scanner.nextInt();
 
@@ -110,39 +104,39 @@ public class Main {
             int[] pair1 = {};
             int[] pair2 = {};
             switch (pairNum) {
-                case 1:
+                case 1 -> {
                     pair1 = new int[]{2, 3, 4, 5};
                     pair2 = new int[]{2, 5};
-                    break;
-                case 2:
+                }
+                case 2 -> {
                     pair1 = new int[]{1, 2, 5, 6};
                     pair2 = new int[]{1, 6};
-                    break;
-                case 3:
+                }
+                case 3 -> {
                     pair1 = new int[]{1, 2, 3, 7};
                     pair2 = new int[]{3, 7};
-                    break;
-                case 4:
+                }
+                case 4 -> {
                     pair1 = new int[]{1, 3, 7};
                     pair2 = new int[]{1, 7};
-                    break;
-                case 5:
+                }
+                case 5 -> {
                     pair1 = new int[]{3, 4, 6, 9};
                     pair2 = new int[]{4, 9};
-                    break;
-                case 6:
+                }
+                case 6 -> {
                     pair1 = new int[]{2, 5, 8, 11};
                     pair2 = new int[]{2, 11};
-                    break;
-                default:
-                    break;
+                }
+                default -> {
+                }
             }
             System.out.println();
 
             int maxMSeq1 = Arrays.stream(pair1).max().getAsInt();
             int maxMSeq2 = Arrays.stream(pair2).max().getAsInt();
 
-            int seedLimit = (maxMSeq1 > maxMSeq2) ? maxMSeq1 : maxMSeq2;
+            int seedLimit = Math.max(maxMSeq1, maxMSeq2);
 
             int[][] seeds = getSeeds(seedLimit);
 
@@ -191,7 +185,7 @@ public class Main {
         int maxMSeq1 = Arrays.stream(mSeq1).max().getAsInt();
         int maxMSeq2 = Arrays.stream(mSeq2).max().getAsInt();
 
-        int seedLimit = (maxMSeq1 > maxMSeq2) ? maxMSeq1 : maxMSeq2;
+        int seedLimit = Math.max(maxMSeq1, maxMSeq2);
 
         int[][] seeds = getSeeds(seedLimit);
 
