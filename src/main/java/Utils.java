@@ -26,7 +26,6 @@ public class Utils {
             writer.write(data);
             writer.close();
         } catch (IOException e) {
-            System.out.println("An error occurred while saving to file!");
             e.printStackTrace();
             return 0;
         }
@@ -41,4 +40,5 @@ public class Utils {
         }
         return sb.toString();
     }
+
 }

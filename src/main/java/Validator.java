@@ -90,7 +90,7 @@ public class Validator {
     }
 
     /**
-     * M-sequences are preferred for a specific generator, when cross-correlation values of LFSRs outputs are three-valued.
+     * M-sequences are preferred for a specific generator when cross-correlation values of LFSRs outputs are three-valued.
      */
     private boolean preferredSequence() {
         int x, y, t;
