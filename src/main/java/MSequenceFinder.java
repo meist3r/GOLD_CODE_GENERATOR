@@ -11,8 +11,8 @@ public class MSequenceFinder {
         int optimals = 0;
         for (int l1 = 1; l1 < combinations; l1++) {
             for (int l2 = l1; l2 < combinations; l2++) {
-                Seed1 = Utils.generateSeeds(MAX_LFSR);
-                Seed2 = Utils.generateSeeds(MAX_LFSR);
+                Seed1 = Utils.generateSeed(MAX_LFSR);
+                Seed2 = Utils.generateSeed(MAX_LFSR);
                 int[] mSeq1 = getMSequence(l1);
                 int[] mSeq2 = getMSequence(l2);
                 Generator g = new Generator(mSeq1, mSeq2, Seed1, Seed2);

@@ -91,7 +91,7 @@ public class Utils {
 
     }
 
-    public static int[] generateSeeds(int maxLen) {
+    public static int[] generateSeed(int maxLen) {
         int[] seed1 = new int[maxLen];
         for (int i = 0; i < maxLen; i++) {
             seed1[i] = 0;
