@@ -1,5 +1,3 @@
-import org.apache.commons.math3.stat.StatUtils;
-
 import java.util.Arrays;
 
 public class Generator {
@@ -58,6 +56,20 @@ public class Generator {
     }
 
     /**
+     * Generates an array containing full gold code sequence.
+     */
+    public int[] generateFullGoldCode(){
+        int len = getLengthOfGoldCode();
+        int[] result = new int[len];
+        for (int i = 0; i < len; i++) {
+            result[i] = generate();
+        }
+        resetLFSR();
+        return result;
+    }
+
+
+    /**
      * Length of the Gold Code sequence for optimal m-sequences is 2^n - 1.
      */
     public int getLengthOfOptimalGoldCode(){
@@ -104,14 +116,13 @@ public class Generator {
         return initialSeed2;
     }
 
+    /**
+     * Restore initial LSFR values.
+     */
     public void resetLFSR(){
         m1.setReg(initialSeed1.clone());
         m2.setReg(initialSeed2.clone());
     }
-
-
-
-
 
 }
 

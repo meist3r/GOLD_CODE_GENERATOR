@@ -50,8 +50,8 @@ public class Utils {
 
     public static String intArrayToString(int[] data){
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < data.length; i++) {
-            sb.append(data[i]);
+        for (int value : data) {
+            sb.append(value);
         }
         return sb.toString();
     }

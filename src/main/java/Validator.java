@@ -1,7 +1,4 @@
-import org.apache.commons.math3.stat.StatUtils;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Validator {
     private Generator generator;
