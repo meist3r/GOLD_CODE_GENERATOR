@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -53,6 +54,7 @@ public class Main {
             System.out.println("3. Pokaz wykres autokorelacji pierwszego wielomianu");
             System.out.println("4. Pokaz wykres autokorelacji drugiego wielomianu");
             System.out.println("5. Generuj kod Golda");
+            System.out.println("6. Zapisz kod Golda do pliku");
             System.out.print("\n> ");
             choice = scanner.nextInt();
             switch (choice) {
@@ -79,6 +81,14 @@ public class Main {
                         System.out.print(goldCode);
                     }
                     System.out.println();
+                }
+                case 6 -> {
+                    StringBuilder sb = new StringBuilder();
+                    for (int i = 0; i < maxLen; i++) {
+                        sb.append(g.generate());
+                    }
+                    int success = Utils.saveStringToFile("GoldCode.txt",sb.toString());
+                    System.out.println((success==1 ? "Zapisano  do pliku." : "Błąd przy zapisywaniu!"));
                 }
                 default -> {
                 }
