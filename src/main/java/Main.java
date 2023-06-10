@@ -1,4 +1,3 @@
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -75,19 +74,13 @@ public class Main {
                     LineChart.generateLineChart(Utils.intToDouble(mSeq2AutoCorArr), "Autokorelacja drugiego wielomianu");
                 }
                 case 5 -> {
-                    System.out.print("# ");
-                    for (int i = 0; i < maxLen; i++) {
-                        int goldCode = g.generate();
-                        System.out.print(goldCode);
-                    }
-                    System.out.println();
+                    System.out.println("# " + Utils.intArrayToString(g.generateFullGoldCode()) + "\n");
                 }
                 case 6 -> {
                     StringBuilder sb = new StringBuilder();
-                    for (int i = 0; i < maxLen; i++) {
-                        sb.append(g.generate());
-                    }
-                    int success = Utils.saveStringToFile("GoldCode.txt",sb.toString());
+                    sb.append("Kod Golda:\n");
+                    sb.append(Utils.intArrayToString(g.generateFullGoldCode()));
+                    int success = Utils.saveStringToFile("GoldCode.txt", sb.toString());
                     System.out.println((success==1 ? "Zapisano  do pliku." : "Błąd przy zapisywaniu!"));
                 }
                 default -> {
