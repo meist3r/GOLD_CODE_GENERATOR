@@ -16,4 +16,19 @@ public class Utils {
 
         return y;
     }
+
+    public static int[] extractSeed(String seed) {
+        int[] result = new int[seed.length()];
+        for (int i = 0; i < seed.length(); i++) {
+            char c = seed.charAt(i);
+            if (c == '0') {
+                result[i] = 0;
+            } else if (c == '1') {
+                result[i] = 1;
+            } else {
+                return null;
+            }
+        }
+        return result;
+    }
 }

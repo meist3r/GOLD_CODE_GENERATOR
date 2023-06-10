@@ -208,7 +208,7 @@ public class Main {
             System.out.println("Podaj pierwsza wartosc ziarna o dlugosci " + seedLimit + " w formacie Big Endian (najstarszy bit po lewej) np. 0001:");
             System.out.print("\n> ");
             String seedInput = scanner.next();
-            seed1 = extractSeed(seedInput);
+            seed1 = Utils.extractSeed(seedInput);
             if (seed1 == null) {
                 System.out.println("Bledny format rejestru");
                 continue;
@@ -220,7 +220,7 @@ public class Main {
             System.out.println("Podaj druga wartosc ziarna o dlugosci " + seedLimit + " w tym samym formacie:");
             System.out.print("\n> ");
             seedInput = scanner.next();
-            seed2 = extractSeed(seedInput);
+            seed2 = Utils.extractSeed(seedInput);
             if (seed2 == null) {
                 System.out.println("Bledny format rejestru");
                 continue;
@@ -234,21 +234,6 @@ public class Main {
         result[0] = seed1;
         result[1] = seed2;
 
-        return result;
-    }
-
-    public static int[] extractSeed(String seed) {
-        int[] result = new int[seed.length()];
-        for (int i = 0; i < seed.length(); i++) {
-            char c = seed.charAt(i);
-            if (c == '0') {
-                result[i] = 0;
-            } else if (c == '1') {
-                result[i] = 1;
-            } else {
-                return null;
-            }
-        }
         return result;
     }
 
