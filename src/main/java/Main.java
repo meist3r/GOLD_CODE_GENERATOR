@@ -159,26 +159,13 @@ public class Main {
 
     public static int[][] undefinedMenu() {
         int[][] result = new int[4][];
+
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Podaj ilosc skladnikow pierwszego wielomianu");
-        System.out.print("\n> ");
-        int mSeqLen1 = scanner.nextInt();
-        System.out.println("Podaj pierwszy wielomian generujacy, wypisujac wykladniki w nim wystepujace np. 5 4 3 2:");
-        System.out.print("\n> ");
-        int[] mSeq1 = new int[mSeqLen1];
-        for (int i = 0; i < mSeqLen1; i++) {
-            mSeq1[i] = scanner.nextInt();
-        }
-        System.out.println();
-        System.out.println("Podaj ilosc skladnikow drugiego wielomianu");
-        System.out.print("\n> ");
-        int mSeqLen2 = scanner.nextInt();
-        System.out.println("Podaj drugi wielomian generujacy w tym samym formacie:");
-        System.out.print("\n> ");
-        int[] mSeq2 = new int[mSeqLen2];
-        for (int i = 0; i < mSeqLen2; i++) {
-            mSeq2[i] = scanner.nextInt();
-        }
+
+        System.out.println("\nPodaj pierwszy wielomian generujacy, wypisujac wykladniki w nim wystepujace np. 5,4,3,2:");
+        int[] mSeq1 = Utils.extractMSeq(scanner.nextLine());
+        System.out.println("\nPodaj drugi wielomian generujacy w tym samym formacie:");
+        int[] mSeq2 = Utils.extractMSeq(scanner.nextLine());
 
         Arrays.sort(mSeq1);
         Arrays.sort(mSeq2);
