@@ -17,6 +17,8 @@ public class GUI {
     private static JLabel string2Label;
     private static JLabel string3Label;
     private static JLabel string4Label;
+    private static JLabel errorMessage1;
+    private static JLabel errorMessage2;
     private static JTextField string1TextField;
     private static JTextField string2TextField;
     private static JTextField string3TextField;
@@ -233,6 +235,12 @@ public class GUI {
         constraints.gridy = 10;
         panel1.add(optimalInfo, constraints);
 
+        errorMessage1 = new JLabel(" ");
+        constraints.gridx = 0;
+        constraints.gridy = 11;
+        errorMessage1.setForeground(Color.RED);
+        panel1.add(errorMessage1, constraints);
+
 
         // Tworzenie panelu 2
         JPanel panel2 = new JPanel();
@@ -384,7 +392,11 @@ public class GUI {
         goldCodeField2.setEditable(false);
         panel2.add(goldCodeField2, constraints);
 
-
+        errorMessage2 = new JLabel(" ");
+        constraints.gridx = 0;
+        constraints.gridy = 13;
+        errorMessage2.setForeground(Color.RED);
+        panel2.add(errorMessage2, constraints);
 
 
 
@@ -416,7 +428,6 @@ public class GUI {
     }
 
     private static void generateChart(int panel) {
-        //todo: sprawdz czy uzyc tego samego generatora czy nowego
         if(panel==1){
             String array1String = array1TextField.getText();
             String array2String = array2TextField.getText();
@@ -426,7 +437,32 @@ public class GUI {
             int[] array1 = Utils.extractMSeq(array1String);
             int[] array2 = Utils.extractMSeq(array2String);
 
-            //todo: walidacja danych
+            int aMax1 = Utils.maxIntArr(array1);
+            int aMax2 = Utils.maxIntArr(array2);
+
+            int seedLen = Math.max(aMax1,aMax2);
+
+            if(aMax1==0){
+                errorMessage1.setText("Uzupełnij wielomian 1");
+                return;
+            }
+
+            if(aMax2==0){
+                errorMessage1.setText("Uzupełnij wielomian 2");
+                return;
+            }
+
+            if(seed1.length!=seedLen){
+                errorMessage1.setText("Ziarno 1 ma nieprawidłową długość");
+                return;
+            }
+
+            if(seed2.length!=seedLen){
+                errorMessage1.setText("Ziarno 2 ma nieprawidłową długość");
+                return;
+            }
+
+
             generator = new Generator(array1, array2, seed1, seed2);
             validator = new Validator(generator);
 
@@ -442,6 +478,8 @@ public class GUI {
             } else if (radioButton4.isSelected()) {
                 int[] mSeqCorArr = validator.getMSequencesCorrelation();
                 LineChart.generateLineChart(Utils.intToDouble(mSeqCorArr), "Korelacja krzyżowa");
+            } else {
+                errorMessage1.setText("Wybierz typ wykresu");
             }
 
 
@@ -449,6 +487,8 @@ public class GUI {
             int[] pair1 = {};
             int[] pair2 = {};
             int radioSwitch;
+            int seedLen = 0;
+
 
             if (radioButton5.isSelected()) {
                 radioSwitch = 1;
@@ -459,7 +499,7 @@ public class GUI {
             } else if (radioButton8.isSelected()) {
                 radioSwitch = 4;
             } else {
-                //todo: error
+                errorMessage2.setText("Wybierz parę wielomianów");
                 return;
             }
 
@@ -467,22 +507,36 @@ public class GUI {
                 case 1 -> {
                     pair1 = new int[]{2, 3, 4, 5};
                     pair2 = new int[]{2, 5};
+                    seedLen = 5;
                 }
                 case 2 -> {
                     pair1 = new int[]{1, 2, 5, 6};
                     pair2 = new int[]{1, 6};
+                    seedLen = 6;
                 }
                 case 3 -> {
                     pair1 = new int[]{1, 2, 3, 7};
                     pair2 = new int[]{3, 7};
+                    seedLen = 7;
                 }
                 case 4 -> {
                     pair1 = new int[]{1, 3, 7};
                     pair2 = new int[]{1, 7};
+                    seedLen = 7;
                 }
             }
             int[] seed1 = Utils.extractSeed(string3TextField.getText());
             int[] seed2 = Utils.extractSeed(string4TextField.getText());
+
+            if(seed1.length!=seedLen){
+                errorMessage2.setText("Ziarno 1 ma nieprawidłową długość");
+                return;
+            }
+
+            if(seed2.length!=seedLen){
+                errorMessage2.setText("Ziarno 2 ma nieprawidłową długość");
+                return;
+            }
 
             generator = new Generator(pair1, pair2, seed1, seed2);
             validator = new Validator(generator);
@@ -499,6 +553,8 @@ public class GUI {
             } else if (radioButton12.isSelected()) {
                 int[] mSeqCorArr = validator.getMSequencesCorrelation();
                 LineChart.generateLineChart(Utils.intToDouble(mSeqCorArr), "Korelacja krzyżowa");
+            } else {
+                errorMessage1.setText("Wybierz typ wykresu");
             }
         }
 
@@ -509,6 +565,7 @@ public class GUI {
         int[] seed2 = {};
         int[] pair1 = {};
         int[] pair2 = {};
+        int seedLen = 0;
         switch (i) {
             case 1,2 -> {
                 String array1String = array1TextField.getText();
@@ -518,6 +575,22 @@ public class GUI {
 
                 pair1 = Utils.extractMSeq(array1String);
                 pair2 = Utils.extractMSeq(array2String);
+
+                int aMax1 = Utils.maxIntArr(pair1);
+                int aMax2 = Utils.maxIntArr(pair2);
+
+               seedLen = Math.max(aMax1,aMax2);
+
+                if(seed1.length!=seedLen){
+                    errorMessage1.setText("Ziarno 1 ma nieprawidłową długość");
+                    return;
+                }
+
+                if(seed2.length!=seedLen){
+                    errorMessage1.setText("Ziarno 2 ma nieprawidłową długość");
+                    return;
+                }
+
             }
             case 3,4 -> {
                 int radioSwitch;
@@ -530,7 +603,7 @@ public class GUI {
                 } else if (radioButton8.isSelected()) {
                     radioSwitch = 4;
                 } else {
-                    //todo: error
+                    errorMessage2.setText("Wybierz parę wielomianów");
                     return;
                 }
 
@@ -538,22 +611,36 @@ public class GUI {
                     case 1 -> {
                         pair1 = new int[]{2, 3, 4, 5};
                         pair2 = new int[]{2, 5};
+                        seedLen = 5;
                     }
                     case 2 -> {
                         pair1 = new int[]{1, 2, 5, 6};
                         pair2 = new int[]{1, 6};
+                        seedLen = 6;
                     }
                     case 3 -> {
                         pair1 = new int[]{1, 2, 3, 7};
                         pair2 = new int[]{3, 7};
+                        seedLen = 7;
                     }
                     case 4 -> {
                         pair1 = new int[]{1, 3, 7};
                         pair2 = new int[]{1, 7};
+                        seedLen = 7;
                     }
                 }
                 seed1 = Utils.extractSeed(string3TextField.getText());
                 seed2 = Utils.extractSeed(string4TextField.getText());
+
+                if(seed1.length!=seedLen){
+                    errorMessage2.setText("Ziarno 1 ma nieprawidłową długość");
+                    return;
+                }
+
+                if(seed2.length!=seedLen){
+                    errorMessage2.setText("Ziarno 2 ma nieprawidłową długość");
+                    return;
+                }
             }
         }
 
@@ -572,6 +659,9 @@ public class GUI {
                 sb.append("Kod Golda:\n");
                 sb.append(goldCode);
                 int success = Utils.saveStringToFile("GoldCode.txt", sb.toString());
+                if(success!=1){
+                    errorMessage2.setText("Nie udało zapisać się kodu do pliku");
+                }
             }
             case 3 -> {
                 goldCodeField2.setText(goldCode);
