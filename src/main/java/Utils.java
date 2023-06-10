@@ -1,5 +1,9 @@
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Utils {
     public static int[] reverseArray(int[] array) {
@@ -54,6 +58,25 @@ public class Utils {
             sb.append(value);
         }
         return sb.toString();
+    }
+
+    public static int[] extractMSeq(String s){
+        List<Integer> numbers = new ArrayList<>();
+
+        Pattern pattern = Pattern.compile("\\d+");
+        Matcher matcher = pattern.matcher(s);
+
+        while (matcher.find()) {
+            int number = Integer.parseInt(matcher.group());
+            numbers.add(number);
+        }
+
+        int[] array1 = new int[numbers.size()];
+        for (int i = 0; i < numbers.size(); i++) {
+            array1[i] = numbers.get(i);
+        }
+
+        return array1;
     }
 
 
