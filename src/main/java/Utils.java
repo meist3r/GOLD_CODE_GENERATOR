@@ -94,9 +94,9 @@ public class Utils {
     public static int[] generateSeed(int maxLen) {
         int[] seed1 = new int[maxLen];
         for (int i = 0; i < maxLen; i++) {
-            seed1[i] = 0;
+            seed1[i] = 1;
         }
-        seed1[maxLen - 1] = 1;
+        seed1[maxLen - 1] = 0;
 
         return seed1;
     }
@@ -124,8 +124,7 @@ public class Utils {
         for (int i = 0; i < list.size(); i++) {
             result[i] = list.get(i);
         }
-
-        return arr.length == result.length;
+        return  (arr.length == result.length) && (arr.length != 0);
 
     }
 
@@ -136,7 +135,14 @@ public class Utils {
         return true;
 
     }
-
+    public static int[] goodPolynomial(String s) throws Exception {
+        boolean g = validatePolynomialInput(s);
+        if (!g) throw new Exception("Wrong polynomial pattern");
+        int [] output = extractMSeq(s);
+        g = validateMSequence(output);
+        if (!g) throw new Exception("Numbers in polynomial duplicated or polynomial empty");
+        return output;
+    }
 
 
 }
