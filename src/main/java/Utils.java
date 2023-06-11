@@ -129,6 +129,14 @@ public class Utils {
 
     }
 
+    public static boolean checkIfEmptySeed(int[] arr){
+        for(int x : arr){
+            if(x == 1) return false;
+        }
+        return true;
+
+    }
+
 
 
 }

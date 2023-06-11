@@ -482,6 +482,16 @@ public class GUI {
                 return;
             }
 
+            if(Utils.checkIfEmptySeed(seed1)){
+                errorMessage1.setText("Ziarno 1 zawiera same zera");
+                return;
+            }
+
+            if(Utils.checkIfEmptySeed(seed2)){
+                errorMessage1.setText("Ziarno 2 zawiera same zera");
+                return;
+            }
+
             if(!Utils.validateMSequence(array1)){
                 errorMessage1.setText("Wielomian 1 zawiera 0 lub te same wykładniki");
                 return;
@@ -585,6 +595,16 @@ public class GUI {
                 return;
             }
 
+            if(Utils.checkIfEmptySeed(seed1)){
+                errorMessage2.setText("Ziarno 1 zawiera same zera");
+                return;
+            }
+
+            if(Utils.checkIfEmptySeed(seed2)){
+                errorMessage2.setText("Ziarno 2 zawiera same zera");
+                return;
+            }
+
             try {
                 generator = new Generator(pair1, pair2, seed1, seed2);
                 validator = new Validator(generator);
@@ -677,6 +697,16 @@ public class GUI {
                     return;
                 }
 
+                if(Utils.checkIfEmptySeed(seed1)){
+                    errorMessage1.setText("Ziarno 1 zawiera same zera");
+                    return;
+                }
+
+                if(Utils.checkIfEmptySeed(seed2)){
+                    errorMessage1.setText("Ziarno 2 zawiera same zera");
+                    return;
+                }
+
                 if(!Utils.validateMSequence(pair1)){
                     errorMessage1.setText("Wielomian 1 zawiera 0 lub te same wykładniki");
                     return;
@@ -745,6 +775,16 @@ public class GUI {
 
                 if(seed2.length!=seedLen){
                     errorMessage2.setText("Ziarno 2 ma nieprawidłową długość");
+                    return;
+                }
+
+                if(Utils.checkIfEmptySeed(seed1)){
+                    errorMessage2.setText("Ziarno 1 zawiera same zera");
+                    return;
+                }
+
+                if(Utils.checkIfEmptySeed(seed2)){
+                    errorMessage2.setText("Ziarno 2 zawiera same zera");
                     return;
                 }
             }

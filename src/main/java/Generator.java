@@ -11,16 +11,29 @@ public class Generator {
         try {
             if (seed1.length != seed2.length){throw new Exception("Different seed lengths.");}
             if (mseq1.length == 0 || mseq2.length==0 ) {throw new Exception("Pair/s empty!");}
-            for (int x:mseq1) {
-                if (x>seed1.length){
-                    throw new Exception("First polynomial level is too high");
-                }
+            int aMax1 = Utils.maxIntArr(mseq1);
+            int aMax2 = Utils.maxIntArr(mseq2);
+
+            int seedLen = Math.max(aMax1,aMax2);
+
+            if(seed1.length!=seedLen){
+                throw new Exception("First seed length is wrong");
             }
-            for (int x:mseq2) {
-                if (x>seed2.length){
-                    throw new Exception("Second polynomial level is too high");
-                }
+
+            if(seed2.length!=seedLen){
+                throw new Exception("Second seed length is wrong");
             }
+
+            if(Utils.checkIfEmptySeed(seed1)){
+                throw new Exception("First seed is empty");
+            }
+
+            if(Utils.checkIfEmptySeed(seed2)){
+                throw new Exception("Second seed is empty");
+            }
+
+
+
         }catch (Exception e) {e.printStackTrace();}
 
         sizeOfLSFR = seed1.length;
