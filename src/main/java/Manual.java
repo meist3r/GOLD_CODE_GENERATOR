@@ -1,15 +1,16 @@
 public class Manual {
     public static void main(String[] args){
         int[] seed1, seed2, polynomial1, polynomial2;
-        seed1 = new int[]{0,0,0,0,1};
-        seed2 = new int[]{0,0,0,0,1};
-        polynomial1 = new int[]{2,3,4,5};
-        polynomial2 = new int[]{2,5};
+        seed1 = Utils.generateSeed(8);
+        seed2 = Utils.generateSeed(8);
+        polynomial1 = new int[]{1, 4, 5, 6, 7, 8};
+        polynomial2 = new int[]{3, 4, 5, 6, 7, 8};
         Generator g = new Generator(polynomial1,polynomial2,seed1,seed2);
         Validator validator = new Validator(g);
         boolean preferred = validator.isPreferredSequences();
         System.out.println("Para wielomianow jest: " + (preferred ? "OPTYMALNA" : "NIEOPTYMALNA"));
         System.out.println("Dlugosc kodu Golda: " + g.getLengthOfGoldCode());
+        System.out.println("Optymalna dlugosc kodu Golda: " + g.getLengthOfOptimalGoldCode());
 
         int[] mSeqCorArr = validator.getMSequencesCorrelation();
         LineChart.generateLineChart(Utils.intToDouble(mSeqCorArr), "Korelacja krzyżowa");
