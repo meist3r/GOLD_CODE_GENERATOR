@@ -1,27 +1,24 @@
 import java.util.Arrays;
 
 public class Generator {
-    private LFSR m1;
-    private LFSR m2;
-    private int sizeOfLSFR;
+    private final LFSR m1;
+    private final LFSR m2;
+    private final int sizeOfLSFR;
     private final int[] initialSeed1, initialSeed2;
 
 
-    public Generator(int[] mseq1, int[] mseq2, int[] seed1, int[] seed2)  {
+    public Generator(int[] mSeq1, int[] mSeq2, int[] seed1, int[] seed2)  {
         try {
-            if (seed1.length != seed2.length){throw new Exception("Different seed lengths.");}
-            if (mseq1.length == 0 || mseq2.length==0 ) {throw new Exception("Pair/s empty!");}
-            int aMax1 = Utils.maxIntArr(mseq1);
-            int aMax2 = Utils.maxIntArr(mseq2);
+            if (mSeq1.length == 0 || mSeq2.length==0 ) {throw new Exception("Pair/s empty!");}
+            int aMax1 = Utils.maxIntArr(mSeq1);
+            int aMax2 = Utils.maxIntArr(mSeq2);
 
             int seedLen = Math.max(aMax1,aMax2);
 
+            if (seed1.length != seed2.length){throw new Exception("Different seed lengths.");}
+
             if(seed1.length!=seedLen){
                 throw new Exception("First seed length is wrong");
-            }
-
-            if(seed2.length!=seedLen){
-                throw new Exception("Second seed length is wrong");
             }
 
             if(Utils.checkIfEmptySeed(seed1)){
@@ -37,26 +34,26 @@ public class Generator {
         }catch (Exception e) {e.printStackTrace();}
 
         sizeOfLSFR = seed1.length;
-        for (int i = 0;i<mseq1.length;i++) {
-            mseq1[i] -= 1;
+        for (int i = 0;i<mSeq1.length;i++) {
+            mSeq1[i] -= 1;
         }
-        for (int i = 0;i<mseq2.length;i++) {
-            mseq2[i] -= 1;
+        for (int i = 0;i<mSeq2.length;i++) {
+            mSeq2[i] -= 1;
         }
 
         initialSeed1 = seed1.clone();
         initialSeed2 = seed2.clone();
 
 
-        m1 = new LFSR(seed1, mseq1);
-        m2 = new LFSR(seed2, mseq2);
+        m1 = new LFSR(seed1, mSeq1);
+        m2 = new LFSR(seed2, mSeq2);
 
 
     }
 
 
     /**
-     * @return next output bit of the Gold Code sequence.
+     * @return next output's bit of the Gold Code sequence.
      */
     public int generate(){
         int out1,out2,result;
@@ -130,7 +127,7 @@ public class Generator {
     }
 
     /**
-     * Restore initial LSFR values.
+     * Restore initial LFSR values.
      */
     public void resetLFSR(){
         m1.setReg(initialSeed1.clone());

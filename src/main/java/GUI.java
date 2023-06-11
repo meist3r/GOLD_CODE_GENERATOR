@@ -2,17 +2,11 @@ import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import java.awt.*;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import java.util.Arrays;
-import java.util.OptionalInt;
 
 public class GUI {
 
     private static JTextField array1TextField;
     private static JTextField array2TextField;
-    private static JTextField array3TextField;
-    private static JTextField array4TextField;
     private static JLabel string1Label;
     private static JLabel string2Label;
     private static JLabel string3Label;
@@ -38,12 +32,6 @@ public class GUI {
     private static JRadioButton radioButton10;
     private static JRadioButton radioButton11;
     private static JRadioButton radioButton12;
-    private static JButton generateButton;
-    private static JButton generateButton2;
-    private static JButton generateButton3;
-    private static JButton generateButton4;
-    private static JButton generateButton5;
-    private static JButton generateButton6;
     private static Generator generator;
     private static Validator validator;
 
@@ -199,7 +187,7 @@ public class GUI {
         panel1.add(radioPanel2, constraints);
 
         // Przycisk
-        generateButton = new JButton("Generuj wykres");
+        JButton generateButton = new JButton("Generuj wykres");
         generateButton.addActionListener(e -> generateChart(1));
 
         constraints.gridx = 0;
@@ -212,11 +200,11 @@ public class GUI {
         constraints.gridx = 0;
         constraints.gridy = 8;
 
-        generateButton3 = new JButton("Generuj kod Golda");
+        JButton generateButton3 = new JButton("Generuj kod Golda");
         generateButton3.addActionListener(e -> generateSequence(1));
         panel1.add(generateButton3, constraints);
         constraints.gridx = 1;
-        generateButton4 = new JButton("Generuj kod Golda do pliku");
+        JButton generateButton4 = new JButton("Generuj kod Golda do pliku");
         generateButton4.addActionListener(e -> generateSequence(2));
         panel1.add(generateButton4, constraints);
 
@@ -366,7 +354,7 @@ public class GUI {
         constraints.gridy = 10;
         constraints.gridwidth = 2;
         constraints.anchor = GridBagConstraints.CENTER;
-        generateButton2 = new JButton("Generuj wykres");
+        JButton generateButton2 = new JButton("Generuj wykres");
         generateButton2.addActionListener(e -> generateChart(2));
         panel2.add(generateButton2, constraints);
 
@@ -374,11 +362,11 @@ public class GUI {
         constraints.gridx = 0;
         constraints.gridy = 11;
 
-        generateButton5 = new JButton("Generuj kod Golda");
+        JButton generateButton5 = new JButton("Generuj kod Golda");
         generateButton5.addActionListener(e -> generateSequence(3));
         panel2.add(generateButton5, constraints);
         constraints.gridx = 1;
-        generateButton6 = new JButton("Generuj kod Golda do pliku");
+        JButton generateButton6 = new JButton("Generuj kod Golda do pliku");
         generateButton6.addActionListener(e -> generateSequence(4));
         panel2.add(generateButton6, constraints);
 
@@ -808,10 +796,10 @@ public class GUI {
                     int success = Utils.saveStringToFile("GoldCode.txt", sb.toString());
                     if(success!=1){
                         if(i==2) errorMessage1.setText("Nie udało zapisać się kodu do pliku");
-                        else if(i==4) errorMessage2.setText("Nie udało zapisać się kodu do pliku");
+                        else errorMessage2.setText("Nie udało zapisać się kodu do pliku");
                     } else {
                         if(i==2) errorMessage1.setText(" ");
-                        else if(i==4) errorMessage2.setText(" ");
+                        else errorMessage2.setText(" ");
                     }
                 }
                 case 3 -> {
@@ -881,14 +869,8 @@ public class GUI {
                 case 5, 6 -> seedLen = 7;
             }
 
-            if(seedLen!=0){
-                string3Label.setText("Ziarno 1 o długości " + seedLen + " (np. 0001...):");
-                string4Label.setText("Ziarno 2 o długości " + seedLen + " (np. 0001...):");
-            } else {
-                string3Label.setText("Ziarno 1 (np. 0001...):");
-                string4Label.setText("Ziarno 2 (np. 0001...):");
-            }
-
+            string3Label.setText("Ziarno 1 o długości " + seedLen + " (np. 0001...):");
+            string4Label.setText("Ziarno 2 o długości " + seedLen + " (np. 0001...):");
 
         }
 

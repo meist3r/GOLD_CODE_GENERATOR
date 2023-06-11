@@ -1,12 +1,12 @@
 import java.util.ArrayList;
 
 public class Validator {
-    private Generator generator;
-    private int[] autoCorrelation;
-    private int[] mSequencesCorrelation;
-    private int[] mSequence1AutoCorrelation;
-    private int[] mSequence2AutoCorrelation;
-    private boolean isPreferredSequences;
+    private final Generator generator;
+    private final int[] autoCorrelation;
+    private final int[] mSequencesCorrelation;
+    private final int[] mSequence1AutoCorrelation;
+    private final int[] mSequence2AutoCorrelation;
+    private final boolean isPreferredSequences;
 
     /**
      * Validator used to check whether a given generator uses preferred pair m-sequences.
@@ -98,7 +98,7 @@ public class Validator {
         } else {
             t = (int) (1 + Math.pow(2, (y + 1) / 2));
         }
-        ArrayList<Integer> e = new ArrayList<Integer>();
+        ArrayList<Integer> e = new ArrayList<>();
         e.add(-t);
         e.add(-1);
         e.add(t - 2);
