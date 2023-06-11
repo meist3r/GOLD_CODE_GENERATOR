@@ -2,7 +2,7 @@ import java.util.Arrays;
 
 public class MSequenceFinder {
 
-    private static int MAX_LFSR = 6;
+    private static int MAX_LFSR = 9;
     private static int[] Seed1;
     private static int[] Seed2;
 
@@ -15,7 +15,9 @@ public class MSequenceFinder {
                 int[] mSeq2 = getMSequence(l2);
                 int aMax1 = Utils.maxIntArr(mSeq1);
                 int aMax2 = Utils.maxIntArr(mSeq2);
-
+                if((aMax1%2==0&&aMax1%4!=2)||(aMax2%2==0&&aMax2%4!=2)){
+                    continue;
+                }
                 int seedLen = Math.max(aMax1,aMax2);
                 Seed1 = Utils.generateSeed(seedLen);
                 Seed2 = Utils.generateSeed(seedLen);
