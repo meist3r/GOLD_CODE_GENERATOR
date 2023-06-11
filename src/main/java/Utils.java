@@ -101,6 +101,12 @@ public class Utils {
         return seed1;
     }
 
+    public static boolean validatePolynomialInput(String input){
+        String regex = "^[\\d,\\s]+$";
+
+        return input.matches(regex);
+    }
+
 
 
 }
