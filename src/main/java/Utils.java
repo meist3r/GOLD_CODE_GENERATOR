@@ -96,7 +96,6 @@ public class Utils {
         for (int i = 0; i < maxLen; i++) {
             seed1[i] = 1;
         }
-        seed1[maxLen - 1] = 0;
 
         return seed1;
     }
