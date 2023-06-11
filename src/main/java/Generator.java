@@ -3,7 +3,7 @@ import java.util.Arrays;
 public class Generator {
     private final LFSR m1;
     private final LFSR m2;
-    private final int sizeOfLSFR;
+    private final int sizeOfLFSR;
     private final int[] initialSeed1, initialSeed2;
 
 
@@ -33,7 +33,7 @@ public class Generator {
 
         }catch (Exception e) {e.printStackTrace();}
 
-        sizeOfLSFR = seed1.length;
+        sizeOfLFSR = seed1.length;
         for (int i = 0;i<mSeq1.length;i++) {
             mSeq1[i] -= 1;
         }
@@ -83,7 +83,7 @@ public class Generator {
      * Length of the Gold Code sequence for optimal m-sequences is 2^n - 1.
      */
     public int getLengthOfOptimalGoldCode(){
-        return (int) (Math.pow(2,sizeOfLSFR)-1);
+        return (int) (Math.pow(2,sizeOfLFSR)-1);
 
     }
 
@@ -106,8 +106,8 @@ public class Generator {
     /**
      * @return Size of LFSRs inside the generator.
      */
-    public int getSizeOfLSFR() {
-        return sizeOfLSFR;
+    public int getSizeOfLFSR() {
+        return sizeOfLFSR;
     }
 
     public LFSR getM1() {
