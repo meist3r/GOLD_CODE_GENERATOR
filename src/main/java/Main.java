@@ -164,6 +164,7 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         while (true) {
             System.out.println("\nPodaj pierwszy wielomian generujacy, wypisujac wykladniki w nim wystepujace np. 5,4,3,2:");
+            System.out.print("\n> ");
             try {
                 mSeq1 = Utils.goodPolynomial(scanner.nextLine());
                 firstG = true;
@@ -173,6 +174,7 @@ public class Main {
                 continue;
             }
             System.out.println("\nPodaj drugi wielomian generujacy w tym samym formacie:");
+            System.out.print("\n> ");
             try {
                 mSeq2 = Utils.goodPolynomial(scanner.nextLine());
                 secondG = true;
