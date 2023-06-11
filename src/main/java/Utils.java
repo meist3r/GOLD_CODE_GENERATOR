@@ -107,6 +107,28 @@ public class Utils {
         return input.matches(regex);
     }
 
+    public static boolean validateSeedInput(String input){
+        String result = input.replace("0", "").replace("1", "");
+        return result.length() == 0;
+    }
+
+    public static boolean validateMSequence(int[] arr){
+        List<Integer> list = new ArrayList<>();
+        for (int num : arr) {
+            if (!list.contains(num)&&num!=0) {
+                list.add(num);
+            }
+        }
+
+        int[] result = new int[list.size()];
+        for (int i = 0; i < list.size(); i++) {
+            result[i] = list.get(i);
+        }
+
+        return arr.length == result.length;
+
+    }
+
 
 
 }
