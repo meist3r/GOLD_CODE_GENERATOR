@@ -13,12 +13,12 @@ public class Generator {
             if (mseq1.length == 0 || mseq2.length==0 ) {throw new Exception("Pair/s empty!");}
             for (int x:mseq1) {
                 if (x>seed1.length){
-                    throw new Exception("Invalid sequences in mseq1.");
+                    throw new Exception("First polynomial level is too high");
                 }
             }
             for (int x:mseq2) {
                 if (x>seed2.length){
-                    throw new Exception("Invalid sequences in mseq2.");
+                    throw new Exception("Second polynomial level is too high");
                 }
             }
         }catch (Exception e) {e.printStackTrace();}

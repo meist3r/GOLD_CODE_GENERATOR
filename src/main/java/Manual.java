@@ -1,10 +1,10 @@
 public class Manual {
     public static void main(String[] args){
         int[] seed1, seed2, polynomial1, polynomial2;
-        seed1 = Utils.generateSeed(8);
-        seed2 = Utils.generateSeed(8);
-        polynomial1 = new int[]{1, 4, 5, 6, 7, 8};
-        polynomial2 = new int[]{3, 4, 5, 6, 7, 8};
+        seed1 = Utils.generateSeed(6);
+        seed2 = Utils.generateSeed(6);
+        polynomial1 = new int[]{1,2,5,6};
+        polynomial2 = new int[]{1,6};
         Generator g = new Generator(polynomial1,polynomial2,seed1,seed2);
         Validator validator = new Validator(g);
         boolean preferred = validator.isPreferredSequences();
