@@ -73,9 +73,7 @@ public class Main {
                     int[] mSeq2AutoCorArr = validator.getMSequencesAutoCorrelation(2);
                     LineChart.generateLineChart(Utils.intToDouble(mSeq2AutoCorArr), "Autokorelacja drugiego wielomianu");
                 }
-                case 5 -> {
-                    System.out.println("# " + Utils.intArrayToString(g.generateFullGoldCode()) + "\n");
-                }
+                case 5 -> System.out.println("# " + Utils.intArrayToString(g.generateFullGoldCode()) + "\n");
                 case 6 -> {
                     StringBuilder sb = new StringBuilder();
                     sb.append("Kod Golda:\n");
@@ -159,14 +157,32 @@ public class Main {
 
     public static int[][] undefinedMenu() {
         int[][] result = new int[4][];
-
+        int[] mSeq1 = new int[0];
+        int[] mSeq2 = new int[0];
+        boolean firstG;
+        boolean secondG;
         Scanner scanner = new Scanner(System.in);
-
-        System.out.println("\nPodaj pierwszy wielomian generujacy, wypisujac wykladniki w nim wystepujace np. 5,4,3,2:");
-        int[] mSeq1 = Utils.extractMSeq(scanner.nextLine());
-        System.out.println("\nPodaj drugi wielomian generujacy w tym samym formacie:");
-        int[] mSeq2 = Utils.extractMSeq(scanner.nextLine());
-
+        while (true) {
+            System.out.println("\nPodaj pierwszy wielomian generujacy, wypisujac wykladniki w nim wystepujace np. 5,4,3,2:");
+            try {
+                mSeq1 = Utils.goodPolynomial(scanner.nextLine());
+                firstG = true;
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+                firstG = false;
+                continue;
+            }
+            System.out.println("\nPodaj drugi wielomian generujacy w tym samym formacie:");
+            try {
+                mSeq2 = Utils.goodPolynomial(scanner.nextLine());
+                secondG = true;
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+                secondG = false;
+                continue;
+            }
+            if (firstG&&secondG)break;
+        }
         Arrays.sort(mSeq1);
         Arrays.sort(mSeq2);
         mSeq1 = Utils.reverseArray(mSeq1);
