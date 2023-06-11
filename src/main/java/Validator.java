@@ -92,7 +92,12 @@ public class Validator {
     private boolean preferredSequence() {
         int x, y, t;
         x = generator.getLengthOfOptimalGoldCode();
-        y = generator.getSizeOfLSFR();
+        y = generator.getSizeOfLFSR();
+
+        if(y%2==0&&y%4!=2){
+            return false;
+        }
+
         if (y % 2 == 0) {
             t = (int) (1 + Math.pow(2, (y + 2) / 2));
         } else {
@@ -108,8 +113,7 @@ public class Validator {
 
         }
         generator.resetLFSR();
-        if(generator.getLengthOfGoldCode()!=x) return false;
-        return true;
+        return generator.getLengthOfGoldCode() == x;
     }
 
     /**
