@@ -434,8 +434,18 @@ public class GUI {
             int[] seed1 = Utils.extractSeed(string1TextField.getText());
             int[] seed2 = Utils.extractSeed(string2TextField.getText());
 
-            int[] array1 = Utils.extractMSeq(array1String);
-            int[] array2 = Utils.extractMSeq(array2String);
+            if(!Utils.validateSeedInput(string1TextField.getText())){
+                errorMessage1.setText("Ziarno 1 ma nieprawidłowe znaki");
+                return;
+            }
+
+            if(!Utils.validateSeedInput(string2TextField.getText())){
+                errorMessage1.setText("Ziarno 2 ma nieprawidłowe znaki");
+                return;
+            }
+
+            int[] array1 = Utils.extractMSeq(array1String.replace(",", " "));
+            int[] array2 = Utils.extractMSeq(array2String.replace(",", " "));
 
             int aMax1 = Utils.maxIntArr(array1);
             int aMax2 = Utils.maxIntArr(array2);
@@ -452,6 +462,16 @@ public class GUI {
                 return;
             }
 
+            if(!Utils.validatePolynomialInput(array1String)){
+                errorMessage1.setText("Wielomian 1 ma nieprawidłowe znaki");
+                return;
+            }
+
+            if(!Utils.validatePolynomialInput(array2String)){
+                errorMessage1.setText("Wielomian 2 ma nieprawidłowe znaki");
+                return;
+            }
+
             if(seed1.length!=seedLen){
                 errorMessage1.setText("Ziarno 1 ma nieprawidłową długość");
                 return;
@@ -462,24 +482,41 @@ public class GUI {
                 return;
             }
 
+            if(!Utils.validateMSequence(array1)){
+                errorMessage1.setText("Wielomian 1 zawiera 0 lub te same wykładniki");
+                return;
+            }
 
-            generator = new Generator(array1, array2, seed1, seed2);
-            validator = new Validator(generator);
+            if(!Utils.validateMSequence(array2)){
+                errorMessage1.setText("Wielomian 2 zawiera 0 lub te same wykładniki");
+                return;
+            }
 
-            if (radioButton1.isSelected()) {
-                int[] mSeq1AutoCorArr = validator.getMSequencesAutoCorrelation(1);
-                LineChart.generateLineChart(Utils.intToDouble(mSeq1AutoCorArr), "Autokorelacja pierwszego wielomianu");
-            } else if (radioButton2.isSelected()) {
-                int[] AutoCorArr = validator.getAutoCorrelation();
-                LineChart.generateLineChart(Utils.intToDouble(AutoCorArr), "Autokorelacja");
-            } else if (radioButton3.isSelected()) {
-                int[] mSeq2AutoCorArr = validator.getMSequencesAutoCorrelation(2);
-                LineChart.generateLineChart(Utils.intToDouble(mSeq2AutoCorArr), "Autokorelacja drugiego wielomianu");
-            } else if (radioButton4.isSelected()) {
-                int[] mSeqCorArr = validator.getMSequencesCorrelation();
-                LineChart.generateLineChart(Utils.intToDouble(mSeqCorArr), "Korelacja krzyżowa");
-            } else {
-                errorMessage1.setText("Wybierz typ wykresu");
+            try {
+                generator = new Generator(array1, array2, seed1, seed2);
+                validator = new Validator(generator);
+
+                if (radioButton1.isSelected()) {
+                    int[] mSeq1AutoCorArr = validator.getMSequencesAutoCorrelation(1);
+                    LineChart.generateLineChart(Utils.intToDouble(mSeq1AutoCorArr), "Autokorelacja pierwszego wielomianu");
+                    errorMessage1.setText(" ");
+                } else if (radioButton2.isSelected()) {
+                    int[] AutoCorArr = validator.getAutoCorrelation();
+                    LineChart.generateLineChart(Utils.intToDouble(AutoCorArr), "Autokorelacja");
+                    errorMessage1.setText(" ");
+                } else if (radioButton3.isSelected()) {
+                    int[] mSeq2AutoCorArr = validator.getMSequencesAutoCorrelation(2);
+                    LineChart.generateLineChart(Utils.intToDouble(mSeq2AutoCorArr), "Autokorelacja drugiego wielomianu");
+                    errorMessage1.setText(" ");
+                } else if (radioButton4.isSelected()) {
+                    int[] mSeqCorArr = validator.getMSequencesCorrelation();
+                    LineChart.generateLineChart(Utils.intToDouble(mSeqCorArr), "Korelacja krzyżowa");
+                    errorMessage1.setText(" ");
+                } else {
+                    errorMessage1.setText("Wybierz typ wykresu");
+                }
+            } catch(Exception e) {
+                errorMessage1.setText("Błąd aplikacji, spróbuj zmniejszyć wykładniki, lub zrestartować aplikację | " + e.getClass().getSimpleName());
             }
 
 
@@ -528,6 +565,16 @@ public class GUI {
             int[] seed1 = Utils.extractSeed(string3TextField.getText());
             int[] seed2 = Utils.extractSeed(string4TextField.getText());
 
+            if(!Utils.validateSeedInput(string3TextField.getText())){
+                errorMessage2.setText("Ziarno 1 ma nieprawidłowe znaki");
+                return;
+            }
+
+            if(!Utils.validateSeedInput(string4TextField.getText())){
+                errorMessage2.setText("Ziarno 2 ma nieprawidłowe znaki");
+                return;
+            }
+
             if(seed1.length!=seedLen){
                 errorMessage2.setText("Ziarno 1 ma nieprawidłową długość");
                 return;
@@ -538,23 +585,31 @@ public class GUI {
                 return;
             }
 
-            generator = new Generator(pair1, pair2, seed1, seed2);
-            validator = new Validator(generator);
+            try {
+                generator = new Generator(pair1, pair2, seed1, seed2);
+                validator = new Validator(generator);
 
-            if (radioButton9.isSelected()) {
-                int[] mSeq1AutoCorArr = validator.getMSequencesAutoCorrelation(1);
-                LineChart.generateLineChart(Utils.intToDouble(mSeq1AutoCorArr), "Autokorelacja pierwszego wielomianu");
-            } else if (radioButton10.isSelected()) {
-                int[] AutoCorArr = validator.getAutoCorrelation();
-                LineChart.generateLineChart(Utils.intToDouble(AutoCorArr), "Autokorelacja");
-            } else if (radioButton11.isSelected()) {
-                int[] mSeq2AutoCorArr = validator.getMSequencesAutoCorrelation(2);
-                LineChart.generateLineChart(Utils.intToDouble(mSeq2AutoCorArr), "Autokorelacja drugiego wielomianu");
-            } else if (radioButton12.isSelected()) {
-                int[] mSeqCorArr = validator.getMSequencesCorrelation();
-                LineChart.generateLineChart(Utils.intToDouble(mSeqCorArr), "Korelacja krzyżowa");
-            } else {
-                errorMessage1.setText("Wybierz typ wykresu");
+                if (radioButton9.isSelected()) {
+                    int[] mSeq1AutoCorArr = validator.getMSequencesAutoCorrelation(1);
+                    LineChart.generateLineChart(Utils.intToDouble(mSeq1AutoCorArr), "Autokorelacja pierwszego wielomianu");
+                    errorMessage2.setText(" ");
+                } else if (radioButton10.isSelected()) {
+                    int[] AutoCorArr = validator.getAutoCorrelation();
+                    LineChart.generateLineChart(Utils.intToDouble(AutoCorArr), "Autokorelacja");
+                    errorMessage2.setText(" ");
+                } else if (radioButton11.isSelected()) {
+                    int[] mSeq2AutoCorArr = validator.getMSequencesAutoCorrelation(2);
+                    LineChart.generateLineChart(Utils.intToDouble(mSeq2AutoCorArr), "Autokorelacja drugiego wielomianu");
+                    errorMessage2.setText(" ");
+                } else if (radioButton12.isSelected()) {
+                    int[] mSeqCorArr = validator.getMSequencesCorrelation();
+                    LineChart.generateLineChart(Utils.intToDouble(mSeqCorArr), "Korelacja krzyżowa");
+                    errorMessage2.setText(" ");
+                } else {
+                    errorMessage2.setText("Wybierz typ wykresu");
+                }
+            }catch(Exception e){
+                errorMessage2.setText("Błąd aplikacji, spróbuj zmniejszyć wykładniki, lub zrestartować aplikację | " + e.getClass().getSimpleName());
             }
         }
 
@@ -573,11 +628,42 @@ public class GUI {
                 seed1 = Utils.extractSeed(string1TextField.getText());
                 seed2 = Utils.extractSeed(string2TextField.getText());
 
-                pair1 = Utils.extractMSeq(array1String);
-                pair2 = Utils.extractMSeq(array2String);
+                if(!Utils.validateSeedInput(string1TextField.getText())){
+                    errorMessage1.setText("Ziarno 1 ma nieprawidłowe znaki");
+                    return;
+                }
+
+                if(!Utils.validateSeedInput(string2TextField.getText())){
+                    errorMessage1.setText("Ziarno 2 ma nieprawidłowe znaki");
+                    return;
+                }
+
+                pair1 = Utils.extractMSeq(array1String.replace(",", " "));
+                pair2 = Utils.extractMSeq(array2String.replace(",", " "));
+
 
                 int aMax1 = Utils.maxIntArr(pair1);
                 int aMax2 = Utils.maxIntArr(pair2);
+
+                if(aMax1==0){
+                    errorMessage1.setText("Uzupełnij wielomian 1");
+                    return;
+                }
+
+                if(aMax2==0){
+                    errorMessage1.setText("Uzupełnij wielomian 2");
+                    return;
+                }
+
+                if(!Utils.validatePolynomialInput(array1String)){
+                    errorMessage1.setText("Wielomian 1 ma nieprawidłowe znaki");
+                    return;
+                }
+
+                if(!Utils.validatePolynomialInput(array2String)){
+                    errorMessage1.setText("Wielomian 2 ma nieprawidłowe znaki");
+                    return;
+                }
 
                seedLen = Math.max(aMax1,aMax2);
 
@@ -588,6 +674,16 @@ public class GUI {
 
                 if(seed2.length!=seedLen){
                     errorMessage1.setText("Ziarno 2 ma nieprawidłową długość");
+                    return;
+                }
+
+                if(!Utils.validateMSequence(pair1)){
+                    errorMessage1.setText("Wielomian 1 zawiera 0 lub te same wykładniki");
+                    return;
+                }
+
+                if(!Utils.validateMSequence(pair2)){
+                    errorMessage1.setText("Wielomian 2 zawiera 0 lub te same wykładniki");
                     return;
                 }
 
@@ -632,6 +728,16 @@ public class GUI {
                 seed1 = Utils.extractSeed(string3TextField.getText());
                 seed2 = Utils.extractSeed(string4TextField.getText());
 
+                if(!Utils.validateSeedInput(string3TextField.getText())){
+                    errorMessage2.setText("Ziarno 1 ma nieprawidłowe znaki");
+                    return;
+                }
+
+                if(!Utils.validateSeedInput(string4TextField.getText())){
+                    errorMessage2.setText("Ziarno 2 ma nieprawidłowe znaki");
+                    return;
+                }
+
                 if(seed1.length!=seedLen){
                     errorMessage2.setText("Ziarno 1 ma nieprawidłową długość");
                     return;
@@ -643,29 +749,39 @@ public class GUI {
                 }
             }
         }
+        try{
+            generator = new Generator(pair1, pair2, seed1, seed2);
+            validator = new Validator(generator);
 
-        generator = new Generator(pair1, pair2, seed1, seed2);
-        validator = new Validator(generator);
-
-        String goldCode = Utils.intArrayToString(generator.generateFullGoldCode());
+            String goldCode = Utils.intArrayToString(generator.generateFullGoldCode());
 
 
-        switch (i) {
-            case 1 -> {
-                goldCodeField1.setText(goldCode);
-            }
-            case 2,4 -> {
-                StringBuilder sb = new StringBuilder();
-                sb.append("Kod Golda:\n");
-                sb.append(goldCode);
-                int success = Utils.saveStringToFile("GoldCode.txt", sb.toString());
-                if(success!=1){
-                    errorMessage2.setText("Nie udało zapisać się kodu do pliku");
+            switch (i) {
+                case 1 -> {
+                    goldCodeField1.setText(goldCode);
+                    errorMessage1.setText(" ");
+                }
+                case 2,4 -> {
+                    StringBuilder sb = new StringBuilder();
+                    sb.append("Kod Golda:\n");
+                    sb.append(goldCode);
+                    int success = Utils.saveStringToFile("GoldCode.txt", sb.toString());
+                    if(success!=1){
+                        if(i==2) errorMessage1.setText("Nie udało zapisać się kodu do pliku");
+                        else if(i==4) errorMessage2.setText("Nie udało zapisać się kodu do pliku");
+                    } else {
+                        if(i==2) errorMessage1.setText(" ");
+                        else if(i==4) errorMessage2.setText(" ");
+                    }
+                }
+                case 3 -> {
+                    goldCodeField2.setText(goldCode);
+                    errorMessage2.setText(" ");
                 }
             }
-            case 3 -> {
-                goldCodeField2.setText(goldCode);
-            }
+        }catch(Exception e){
+            if(i==1||i==2) errorMessage1.setText("Błąd aplikacji, spróbuj zmniejszyć wykładniki, lub zrestartować aplikację | " + e.getClass().getSimpleName());
+            else if(i==3||i==4) errorMessage2.setText("Błąd aplikacji, spróbuj zmniejszyć wykładniki, lub zrestartować aplikację | " + e.getClass().getSimpleName());
         }
 
     }
@@ -675,8 +791,9 @@ public class GUI {
         if(i==1||i==2){
             String array1String = array1TextField.getText();
             String array2String = array2TextField.getText();
-            int[] array1 = Utils.extractMSeq(array1String);
-            int[] array2 = Utils.extractMSeq(array2String);
+
+            int[] array1 = Utils.extractMSeq(array1String.replace(",", " "));
+            int[] array2 = Utils.extractMSeq(array2String.replace(",", " "));
             int aMax1 = Utils.maxIntArr(array1);
             int aMax2 = Utils.maxIntArr(array2);
 
@@ -698,15 +815,20 @@ public class GUI {
             int[] seed1 = Utils.generateSeed(seedLen);
             int[] seed2 = Utils.generateSeed(seedLen);
 
-            Generator temporaryGenerator = new Generator(array1, array2, seed1, seed2);
-            Validator temporaryValidator = new Validator(temporaryGenerator);
+            try{
+                Generator temporaryGenerator = new Generator(array1, array2, seed1, seed2);
+                Validator temporaryValidator = new Validator(temporaryGenerator);
 
-            boolean isOptimal = temporaryValidator.isPreferredSequences();
+                boolean isOptimal = temporaryValidator.isPreferredSequences();
 
-            if(isOptimal){
-                optimalInfo.setText("Twoja para wielomianów generujących jest: OPTYMALNA");
-            } else {
-                optimalInfo.setText("Twoja para wielomianów generujących jest: NIEOPTYMALNA");
+                if(isOptimal){
+                    optimalInfo.setText("Twoja para wielomianów generujących jest: OPTYMALNA");
+                } else {
+                    optimalInfo.setText("Twoja para wielomianów generujących jest: NIEOPTYMALNA");
+                }
+            }catch(Exception e){
+                if(i==1||i==2) errorMessage1.setText("Błąd aplikacji, spróbuj zmniejszyć wykładniki, lub zrestartować aplikację | " + e.getClass().getSimpleName());
+                else if(i==3||i==4||i==5||i==6) errorMessage2.setText("Błąd aplikacji, spróbuj zmniejszyć wykładniki, lub zrestartować aplikację | " + e.getClass().getSimpleName());
             }
 
 
