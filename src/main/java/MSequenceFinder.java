@@ -2,7 +2,7 @@ import java.util.Arrays;
 
 public class MSequenceFinder {
 
-    private static int MAX_LFSR = 9;
+    private static int MAX_LFSR = 7;
     private static int[] Seed1;
     private static int[] Seed2;
 
